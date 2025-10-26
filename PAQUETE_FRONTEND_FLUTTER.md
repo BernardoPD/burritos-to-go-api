@@ -2,7 +2,10 @@
 
 **Fecha de entrega:** 2025-10-26  
 **Backend:** Django REST Framework  
-**Versión API:** 1.0
+**Versión API:** 1.0  
+**Estado:** ✅ DESPLEGADO EN PRODUCCIÓN
+
+**URL Producción:** https://pradodiazbackend.pythonanywhere.com
 
 ---
 
@@ -10,7 +13,10 @@
 
 | Archivo | Descripción |
 |---------|-------------|
+| `GUIA_FLUTTER_INTEGRACION.md` | **⭐ EMPEZAR AQUÍ** - Código Flutter completo con ejemplos |
 | `DOCUMENTACION_API_FLUTTER.md` | Documentación completa con ejemplos en Dart |
+| `GUIA_ENDPOINTS_CLIENTE.md` | Endpoints específicos para la app cliente |
+| `DEPLOYMENT_PASO_A_PASO.md` | Guía de deployment en PythonAnywhere |
 | `Burritos_API_Collection.postman_collection.json` | Colección de Postman para probar endpoints |
 | Este archivo | Resumen ejecutivo |
 
@@ -19,13 +25,15 @@
 ## 🚀 Quick Start
 
 ### 1. URL Base de la API
-```
-http://localhost:8000/api/
+
+**PRODUCCIÓN (Usar esta):**
+```dart
+const String BASE_URL = 'https://pradodiazbackend.pythonanywhere.com/api/';
 ```
 
-**En producción, cambiar a:**
-```
-https://tu-dominio.com/api/
+**Local (solo para desarrollo):**
+```dart
+const String BASE_URL_LOCAL = 'http://127.0.0.1:8000/api/';
 ```
 
 ---

@@ -7,10 +7,19 @@
 
 Sistema de gestión de pedidos para restaurante de comida rápida con API REST completa para integración con frontend Flutter.
 
+## 🚀 **PRODUCCIÓN ACTIVA**
+
+**URL:** https://pradodiazbackend.pythonanywhere.com
+
+**Repositorio:** https://github.com/BernardoPD/burritos-to-go-api
+
 ---
 
 ## 📋 Tabla de Contenidos
 
+- [Producción Activa](#-producción-activa)
+- [Deployment en PythonAnywhere](#-deployment-en-pythonanywhere)
+- [Documentación para Flutter](#-documentación-para-flutter)
 - [Características](#características)
 - [Tecnologías](#tecnologías)
 - [Instalación](#instalación)
@@ -21,6 +30,52 @@ Sistema de gestión de pedidos para restaurante de comida rápida con API REST c
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Dashboards Web](#dashboards-web)
 - [Licencia](#licencia)
+
+---
+
+## 🚀 Deployment en PythonAnywhere
+
+### Guías de Deployment Disponibles:
+
+1. **DEPLOYMENT_PASO_A_PASO.md** - Guía completa manual paso a paso
+2. **GUIA_DEPLOYMENT_PYTHONANYWHERE.md** - Guía técnica de deployment
+3. **deploy_pythonanywhere.py** - Script de deployment automático
+
+### URLs de Producción:
+
+- **API Base:** https://pradodiazbackend.pythonanywhere.com/api/
+- **Admin Panel:** https://pradodiazbackend.pythonanywhere.com/admin/
+- **Dashboard Cliente:** https://pradodiazbackend.pythonanywhere.com/api/panel/
+
+---
+
+## 📱 Documentación para Flutter
+
+### Guías de Integración:
+
+1. **GUIA_FLUTTER_INTEGRACION.md** - Guía completa de integración con Flutter
+2. **DOCUMENTACION_API_FLUTTER.md** - Documentación detallada de todos los endpoints
+3. **GUIA_ENDPOINTS_CLIENTE.md** - Guía específica de endpoints para cliente
+
+### URL Base para Flutter:
+```dart
+const String BASE_URL = 'https://pradodiazbackend.pythonanywhere.com/api/';
+```
+
+### Credenciales de Prueba:
+
+**Cliente:**
+```
+username: cliente
+password: cliente123
+saldo: $500
+```
+
+**Admin:**
+```
+username: admin
+password: admin123
+```
 
 ---
 
