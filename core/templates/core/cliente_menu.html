@@ -1,0 +1,45 @@
+{% extends 'core/base_cliente.html' %}
+
+{% block title %}Menú{% endblock %}
+
+{% block content %}
+<h2 style="color: #667eea; margin-bottom: 30px;">📋 Menú de Productos</h2>
+
+{% for categoria in categorias %}
+<div class="card">
+    <h3>{{ categoria.nombre }}</h3>
+    
+    {% if categoria.producto_set.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in categoria.producto_set.all %}
+            {% if producto.activo %}
+            <tr>
+                <td><strong>{{ producto.nombre }}</strong></td>
+                <td>{{ producto.descripcion }}</td>
+                <td style="font-size: 18px; font-weight: bold; color: #28a745;">${{ producto.precio }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: #888; padding: 20px;">No hay productos en esta categoría</p>
+    {% endif %}
+</div>
+{% endfor %}
+
+<div style="margin-top: 30px; text-align: center;">
+    <a href="{% url 'cliente-hacer-pedido' %}" class="btn btn-success" style="font-size: 18px; padding: 15px 40px;">
+        🛒 Hacer un Pedido Ahora
+    </a>
+</div>
+
+{% endblock %}

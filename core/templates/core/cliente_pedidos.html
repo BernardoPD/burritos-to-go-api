@@ -1,0 +1,84 @@
+{% extends 'core/base_cliente.html' %}
+
+{% block title %}Mis Pedidos{% endblock %}
+
+{% block content %}
+<h2 style="color: #667eea; margin-bottom: 30px;">📦 Mis Pedidos</h2>
+
+<div style="margin-bottom: 20px;">
+    <a href="?tipo=actuales" class="btn {% if request.GET.tipo == 'actuales' %}btn-primary{% else %}btn-primary{% endif %}" style="{% if request.GET.tipo != 'actuales' %}background: #6c757d;{% endif %}">
+        🔄 Pedidos Actuales
+    </a>
+    <a href="?tipo=pasados" class="btn {% if request.GET.tipo == 'pasados' %}btn-primary{% else %}btn-primary{% endif %}" style="{% if request.GET.tipo != 'pasados' %}background: #6c757d;{% endif %} margin-left: 10px;">
+        ✅ Pedidos Pasados
+    </a>
+    <a href="{% url 'cliente-mis-pedidos-view' %}" class="btn btn-primary" style="{% if request.GET.tipo %}background: #6c757d;{% endif %} margin-left: 10px;">
+        📋 Todos
+    </a>
+</div>
+
+{% if pedidos %}
+<div class="card">
+    <h3>
+        {% if request.GET.tipo == 'actuales' %}
+            🔄 Pedidos Actuales (Pendientes o En Proceso)
+        {% elif request.GET.tipo == 'pasados' %}
+            ✅ Pedidos Pasados (Completados o Cancelados)
+        {% else %}
+            📋 Todos los Pedidos
+        {% endif %}
+    </h3>
+    
+    {% for pedido in pedidos %}
+    <div style="border: 2px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 15px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div>
+                <h4 style="color: #667eea; margin: 0;">Pedido #{{ pedido.id }}</h4>
+                <p style="color: #888; margin: 5px 0;">{{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="font-size: 24px; font-weight: bold; color: #28a745; margin: 0;">${{ pedido.total }}</p>
+                <p style="margin: 5px 0;">
+                    {% if pedido.estatus == 'pendiente' %}
+                        <span style="background: #ffc107; padding: 5px 15px; border-radius: 4px; color: #000; font-weight: bold;">⏳ Pendiente</span>
+                    {% elif pedido.estatus == 'en_proceso' %}
+                        <span style="background: #17a2b8; padding: 5px 15px; border-radius: 4px; color: white; font-weight: bold;">🔄 En Proceso</span>
+                    {% elif pedido.estatus == 'completado' %}
+                        <span style="background: #28a745; padding: 5px 15px; border-radius: 4px; color: white; font-weight: bold;">✅ Completado</span>
+                    {% elif pedido.estatus == 'cancelado' %}
+                        <span style="background: #dc3545; padding: 5px 15px; border-radius: 4px; color: white; font-weight: bold;">❌ Cancelado</span>
+                    {% else %}
+                        <span style="background: #6c757d; padding: 5px 15px; border-radius: 4px; color: white; font-weight: bold;">{{ pedido.estatus }}</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+            <strong>Productos:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                {% for producto in pedido.productos.all %}
+                <li style="margin: 5px 0;">{{ producto.nombre }} - ${{ producto.precio }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    <strong>No tienes pedidos 
+    {% if request.GET.tipo == 'actuales' %}
+        actuales
+    {% elif request.GET.tipo == 'pasados' %}
+        pasados
+    {% endif %}
+    </strong>
+    <p style="margin-top: 10px;">¿Por qué no haces tu primer pedido?</p>
+    <a href="{% url 'cliente-hacer-pedido' %}" class="btn btn-success" style="margin-top: 15px;">
+        🛒 Hacer un Pedido
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}

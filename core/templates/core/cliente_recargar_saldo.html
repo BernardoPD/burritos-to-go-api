@@ -1,0 +1,66 @@
+{% extends 'core/base_cliente.html' %}
+
+{% block title %}Recargar Saldo{% endblock %}
+
+{% block content %}
+<h2 style="color: #667eea; margin-bottom: 30px;">💰 Recargar Saldo</h2>
+
+<div class="card" style="border-left-color: #28a745;">
+    <h3>Tu Saldo Actual</h3>
+    <p style="font-size: 48px; font-weight: bold; color: #28a745; margin: 20px 0;">${{ request.user.saldo }}</p>
+</div>
+
+<div class="card">
+    <h3>Agregar Fondos</h3>
+    
+    <form method="post" action="{% url 'cliente-recargar-saldo-view' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="monto">Monto a Recargar</label>
+            <input type="number" 
+                   name="monto" 
+                   id="monto" 
+                   step="0.01" 
+                   min="0.01" 
+                   max="10000" 
+                   required 
+                   placeholder="Ej: 100.00"
+                   style="font-size: 24px; padding: 20px;">
+            <small style="color: #888; display: block; margin-top: 10px;">
+                Mínimo: $0.01 | Máximo: $10,000.00
+            </small>
+        </div>
+        
+        <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h4 style="color: #1976d2; margin: 0 0 15px 0;">💳 Montos Sugeridos</h4>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button type="button" onclick="document.getElementById('monto').value='50'" class="btn btn-primary" style="flex: 1; min-width: 100px;">$50</button>
+                <button type="button" onclick="document.getElementById('monto').value='100'" class="btn btn-primary" style="flex: 1; min-width: 100px;">$100</button>
+                <button type="button" onclick="document.getElementById('monto').value='200'" class="btn btn-primary" style="flex: 1; min-width: 100px;">$200</button>
+                <button type="button" onclick="document.getElementById('monto').value='500'" class="btn btn-primary" style="flex: 1; min-width: 100px;">$500</button>
+                <button type="button" onclick="document.getElementById('monto').value='1000'" class="btn btn-primary" style="flex: 1; min-width: 100px;">$1,000</button>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <button type="submit" class="btn btn-success" style="font-size: 18px; padding: 15px 50px;">
+                ✅ Confirmar Recarga
+            </button>
+            <a href="{% url 'cliente-dashboard' %}" class="btn btn-primary" style="font-size: 18px; padding: 15px 50px; background: #6c757d; margin-left: 15px;">
+                ❌ Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+<div class="alert alert-info" style="margin-top: 30px;">
+    <strong>ℹ️ Información importante:</strong>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+        <li>El monto se agregará inmediatamente a tu saldo</li>
+        <li>Puedes recargar desde $0.01 hasta $10,000 por transacción</li>
+        <li>No hay comisiones por recarga</li>
+    </ul>
+</div>
+
+{% endblock %}

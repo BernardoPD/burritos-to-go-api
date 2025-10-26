@@ -706,9 +706,36 @@ python manage.py createsuperuser
 - `DELETE /api/pedidos/{id}/` - Eliminar pedido
 - `POST /api/crear_pedido/` - Crear pedido con validación de saldo
 
+### 🆕 Endpoints para Clientes (Nuevos - 2025-10-26)
+
+Según requerimientos, el cliente puede:
+- ✅ Hacer pedidos
+- ✅ Consultar sus pedidos actuales y pasados
+- ✅ Consultar menú
+- ✅ Recargar saldo a su cuenta
+- ✅ Consultar su saldo
+
+#### Menú
+- `GET /api/cliente/menu/` - Consultar menú completo (categorías con productos activos)
+
+#### Pedidos del Cliente
+- `GET /api/cliente/mis-pedidos/` - Consultar todos mis pedidos
+- `GET /api/cliente/mis-pedidos/?tipo=actuales` - Solo pedidos actuales (pendiente, en_proceso)
+- `GET /api/cliente/mis-pedidos/?tipo=pasados` - Solo pedidos pasados (completado, cancelado)
+- `GET /api/cliente/mis-pedidos/?estatus=pendiente` - Filtrar por estatus específico
+
+#### Saldo
+- `GET /api/cliente/mi-saldo/` - Consultar mi saldo actual
+- `POST /api/cliente/recargar-saldo/` - Recargar saldo
+  ```json
+  {
+    "monto": 100.00
+  }
+  ```
+
 ---
 
-## 🎯 Mejoras Futuras Recomendadas
+## 🚀 Mejoras Futuras Recomendadas
 
 1. **Autenticación y Autorización**
    - Implementar JWT tokens
@@ -744,6 +771,280 @@ python manage.py createsuperuser
 
 ---
 
+## 🆕 Funcionalidades para Clientes (Implementadas 2025-10-26)
+
+### Requerimientos
+El usuario cliente debe poder:
+- ✅ Hacer pedidos
+- ✅ Consultar sus pedidos actuales y pasados
+- ✅ Consultar menú
+- ✅ Recargar saldo a su cuenta
+- ✅ Consultar su saldo
+
+### Endpoints Implementados
+
+#### 1. Consultar Menú
+**Endpoint:** `GET /api/cliente/menu/`
+
+**Descripción:** Muestra el menú completo organizado por categorías con productos activos.
+
+**Respuesta:**
+```json
+{
+  "categorias": [
+    {
+      "id": 1,
+      "nombre": "Burritos",
+      "productos": [
+        {
+          "id": 1,
+          "nombre": "Burrito de Carne",
+          "descripcion": "Delicioso burrito con carne asada",
+          "precio": "80.00",
+          "categoria_nombre": "Burritos"
+        }
+      ]
+    }
+  ],
+  "total_categorias": 3
+}
+```
+
+**Vista:** `MenuView` en `core/views.py`  
+**Serializer:** `CategoriaConProductosSerializer`, `ProductoMenuSerializer`
+
+---
+
+#### 2. Consultar Mis Pedidos
+**Endpoint:** `GET /api/cliente/mis-pedidos/`
+
+**Autenticación:** Requerida (`IsAuthenticated`)
+
+**Filtros disponibles:**
+- `?tipo=actuales` - Solo pedidos pendiente o en_proceso
+- `?tipo=pasados` - Solo pedidos completado o cancelado
+- `?estatus=pendiente` - Filtrar por estatus específico
+
+**Ejemplos:**
+```bash
+# Todos mis pedidos
+GET /api/cliente/mis-pedidos/
+
+# Solo pedidos actuales
+GET /api/cliente/mis-pedidos/?tipo=actuales
+
+# Solo pedidos pasados
+GET /api/cliente/mis-pedidos/?tipo=pasados
+
+# Solo pedidos pendientes
+GET /api/cliente/mis-pedidos/?estatus=pendiente
+```
+
+**Respuesta:**
+```json
+{
+  "pedidos": [
+    {
+      "id": 5,
+      "cliente": 2,
+      "cliente_nombre": "juan",
+      "productos_detalle": [
+        {
+          "id": 1,
+          "nombre": "Burrito de Carne",
+          "precio": 80.00
+        },
+        {
+          "id": 3,
+          "nombre": "Refresco",
+          "precio": 20.00
+        }
+      ],
+      "total": "100.00",
+      "estatus": "pendiente",
+      "fecha": "2025-10-26T18:30:00Z"
+    }
+  ],
+  "total": 1,
+  "filtros_aplicados": {
+    "tipo": "actuales",
+    "estatus": null
+  }
+}
+```
+
+**Vista:** `MisPedidosView` en `core/views.py`  
+**Serializer:** `PedidoDetalleSerializer`
+
+---
+
+#### 3. Consultar Mi Saldo
+**Endpoint:** `GET /api/cliente/mi-saldo/`
+
+**Autenticación:** Requerida (`IsAuthenticated`)
+
+**Respuesta:**
+```json
+{
+  "saldo": 500.00,
+  "usuario": "juan",
+  "email": "juan@example.com",
+  "fecha_consulta": "2025-10-26T18:30:00Z"
+}
+```
+
+**Vista:** `MiSaldoView` en `core/views.py`
+
+---
+
+#### 4. Recargar Saldo
+**Endpoint:** `POST /api/cliente/recargar-saldo/`
+
+**Autenticación:** Requerida (`IsAuthenticated`)
+
+**Body:**
+```json
+{
+  "monto": 100.00
+}
+```
+
+**Validaciones:**
+- ✅ Monto debe ser positivo (mínimo $0.01)
+- ✅ Monto máximo: $10,000
+- ✅ Debe ser número decimal válido
+
+**Respuesta exitosa:**
+```json
+{
+  "mensaje": "Saldo recargado exitosamente",
+  "monto_recargado": 100.00,
+  "saldo_anterior": 500.00,
+  "saldo_actual": 600.00,
+  "usuario": "juan",
+  "fecha_recarga": "2025-10-26T18:30:00Z"
+}
+```
+
+**Respuesta de error:**
+```json
+{
+  "error": "Datos inválidos",
+  "detalles": {
+    "monto": ["El monto debe ser mayor a 0"]
+  }
+}
+```
+
+**Vista:** `RecargarSaldoView` en `core/views.py`  
+**Serializer:** `RecargarSaldoSerializer`
+
+---
+
+### Serializadores Nuevos
+
+#### ProductoMenuSerializer
+Serializer simplificado para mostrar productos en el menú (solo información esencial).
+
+#### CategoriaConProductosSerializer
+Serializer que incluye productos activos de cada categoría (para mostrar menú organizado).
+
+#### PedidoDetalleSerializer
+Serializer detallado que incluye:
+- Nombre del cliente
+- Lista de productos con nombre y precio
+- Toda la información del pedido
+
+#### RecargarSaldoSerializer
+Serializer de validación para recargas:
+- Valida monto positivo (Decimal)
+- Valida monto máximo $10,000
+- Mensajes de error descriptivos
+
+---
+
+### Reglas de Negocio Aplicadas
+
+#### ✅ Separación de Responsabilidades
+- Endpoints específicos para clientes bajo `/api/cliente/`
+- Vistas separadas para cada funcionalidad
+- Serializadores específicos según el caso de uso
+
+#### ✅ Seguridad
+- `IsAuthenticated` en endpoints que requieren autenticación
+- Filtrado automático por cliente (solo ve sus propios datos)
+- Validación de montos en recargas
+
+#### ✅ Buenas Prácticas según rules.md
+- Comentarios descriptivos en español con emojis
+- Validaciones antes de procesar datos
+- Mensajes de error descriptivos
+- Uso de `DecimalField` para dinero
+- Uso de `timezone.now()` para fechas
+- Filtros con `prefetch_related` para optimizar queries
+
+#### ✅ Consistencia
+- Formato de respuesta JSON consistente
+- Códigos de estado HTTP apropiados
+- Nomenclatura descriptiva para endpoints
+- Serializers con campos explícitos
+
+---
+
+### Archivos Modificados
+
+1. **core/serializers.py**
+   - ➕ `ProductoMenuSerializer` - Menú simplificado
+   - ➕ `CategoriaConProductosSerializer` - Categorías con productos
+   - ➕ `PedidoDetalleSerializer` - Pedidos con detalles
+   - ➕ `RecargarSaldoSerializer` - Validación de recarga
+   - ✏️ `ProductoSerializer` - Agregado `categoria_nombre`
+
+2. **core/views.py**
+   - ➕ `MenuView` - Consultar menú
+   - ➕ `MisPedidosView` - Consultar mis pedidos
+   - ➕ `MiSaldoView` - Consultar mi saldo
+   - ➕ `RecargarSaldoView` - Recargar saldo
+
+3. **core/urls.py**
+   - ➕ `cliente/menu/` - Ruta para menú
+   - ➕ `cliente/mis-pedidos/` - Ruta para pedidos
+   - ➕ `cliente/mi-saldo/` - Ruta para saldo
+   - ➕ `cliente/recargar-saldo/` - Ruta para recarga
+
+4. **rules.md**
+   - ✏️ Sección de endpoints actualizada
+   - ➕ Sección "Funcionalidades para Clientes"
+
+---
+
+### Ejemplos de Uso con curl
+
+```bash
+# 1. Consultar menú (sin autenticación requerida)
+curl -X GET http://localhost:8000/api/cliente/menu/
+
+# 2. Consultar mi saldo (requiere autenticación)
+curl -X GET http://localhost:8000/api/cliente/mi-saldo/ \
+  -H "Authorization: Token tu_token_aqui"
+
+# 3. Recargar saldo
+curl -X POST http://localhost:8000/api/cliente/recargar-saldo/ \
+  -H "Authorization: Token tu_token_aqui" \
+  -H "Content-Type: application/json" \
+  -d '{"monto": 100.00}'
+
+# 4. Consultar mis pedidos actuales
+curl -X GET "http://localhost:8000/api/cliente/mis-pedidos/?tipo=actuales" \
+  -H "Authorization: Token tu_token_aqui"
+
+# 5. Consultar todos mis pedidos
+curl -X GET http://localhost:8000/api/cliente/mis-pedidos/ \
+  -H "Authorization: Token tu_token_aqui"
+```
+
+---
+
 ## 📞 Contacto y Soporte
 
 Para dudas sobre este proyecto, consultar:
@@ -753,9 +1054,137 @@ Para dudas sobre este proyecto, consultar:
 
 ---
 
-**Última actualización:** 2025-10-24  
+**Última actualización:** 2025-10-26  
 **Versión Django:** 5.2.7  
 **Versión Python:** 3.x (recomendado 3.9+)
+
+---
+
+## 🐛 Historial de Correcciones de Bugs
+
+### Bug #1: Saldo no se descontaba al crear pedido (2025-10-26)
+
+**PROBLEMA DETECTADO:** Al crear un pedido desde el admin de Django, el total se guardaba en 0 y NO se descontaba del saldo del usuario.
+
+**CAUSA RAÍZ:** 
+- El método `save_model()` se ejecuta ANTES de guardar la relación ManyToMany con productos
+- Al intentar calcular el total, `obj.productos.all()` estaba vacío = total de 0
+- El saldo del cliente no se descontaba
+
+**ARCHIVOS MODIFICADOS:**
+- `core/admin.py` - Movida lógica de cálculo de total a `save_related()`
+- `core/models.py` - Simplificado método `save()` del modelo Pedido
+- `core/views.py` - YA tenía la corrección implementada en `PedidoViewSet.perform_create()`
+
+**SOLUCIÓN IMPLEMENTADA:**
+
+1. **En `core/models.py` (Pedido.save()):**
+   - Simplificado: Solo guarda, no calcula total
+   - El cálculo se hace en admin.py y views.py según corresponda
+
+2. **En `core/admin.py`:**
+   - Creado `PedidoForm` con validación en método `clean()`:
+     - Valida que hay productos seleccionados
+     - Calcula el total sumando precios de productos
+     - Valida saldo suficiente del cliente
+     - Muestra error detallado si saldo es insuficiente
+   
+   - Modificado `PedidoAdmin`:
+     - `save_model()`: Solo guarda el pedido, marca si es nuevo
+     - **`save_related()`**: DESPUÉS de guardar productos M2M:
+       * Calcula total sumando precios (ahora SÍ existen productos)
+       * Actualiza campo total del pedido
+       * Descuenta total del saldo del cliente (solo al crear)
+       * Muestra mensaje de éxito con total y saldo restante
+
+3. **En `core/views.py` (ya estaba corregido):**
+   - `PedidoViewSet.perform_create()`:
+     - Calcula total ANTES de guardar
+     - Valida saldo suficiente
+     - Guarda pedido UNA SOLA VEZ
+     - Descuenta total del saldo del cliente
+     - Persiste cambios con `cliente.save()`
+   
+   - `CrearPedidoView.post()`:
+     - Ya tenía implementada la lógica correcta de descuento
+
+**REGLAS DE NEGOCIO APLICADAS:**
+- ✅ Todo pedido debe descontar el total del saldo del cliente
+- ✅ Se debe validar saldo suficiente ANTES de crear el pedido
+- ✅ Consistencia entre admin y API
+- ✅ Prevenir saldos negativos
+
+**CÓDIGO ANTES (admin.py):**
+```python
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cliente', 'total', 'estatus', 'fecha')
+    filter_horizontal = ('productos',)
+    readonly_fields = ('total',)
+    # ❌ NO validaba saldo
+    # ❌ NO calculaba total correctamente (productos M2M aún no guardados)
+    # ❌ NO descontaba saldo
+```
+
+**CÓDIGO DESPUÉS:**
+```python
+# models.py - Pedido.save() SIMPLIFICADO
+def save(self, *args, **kwargs):
+    # Solo guarda, no calcula total (lo hacen admin y views)
+    super().save(*args, **kwargs)
+
+# admin.py
+class PedidoForm(forms.ModelForm):
+    def clean(self):
+        # ✅ Valida saldo suficiente ANTES de guardar
+        productos = cleaned_data.get('productos')
+        cliente = cleaned_data.get('cliente')
+        total = sum([p.precio for p in productos])
+        if cliente.saldo < total:
+            raise ValidationError('Saldo insuficiente')
+
+class PedidoAdmin(admin.ModelAdmin):
+    form = PedidoForm
+    
+    def save_model(self, request, obj, form, change):
+        # Solo guarda el pedido, marca si es nuevo
+        super().save_model(request, obj, form, change)
+        request._pedido_es_nuevo = not change
+    
+    def save_related(self, request, form, formsets, change):
+        # ✅ DESPUÉS de guardar productos M2M
+        super().save_related(request, form, formsets, change)
+        
+        obj = form.instance
+        # ✅ Ahora SÍ existen productos, calcular total
+        total = sum([p.precio for p in obj.productos.all()])
+        obj.total = total
+        obj.save(update_fields=['total'])
+        
+        # ✅ Descontar saldo solo al crear
+        if request._pedido_es_nuevo:
+            obj.cliente.saldo -= total
+            obj.cliente.save()
+```
+
+**TESTING REALIZADO:**
+- ✅ `python manage.py check`: Sin errores
+- ✅ Crear pedido desde admin calcula total correctamente
+- ✅ Crear pedido desde admin descuenta saldo correctamente
+- ✅ Crear pedido desde API descuenta saldo correctamente
+- ✅ Validación de saldo insuficiente funciona en ambos
+- ✅ Mensajes de error son descriptivos y claros
+- ✅ Al editar pedido NO se vuelve a descontar saldo
+
+**PUNTOS CLAVE DE LA SOLUCIÓN:**
+1. **save_model()** se ejecuta ANTES de guardar productos M2M → Solo guarda pedido
+2. **save_related()** se ejecuta DESPUÉS de guardar productos M2M → Calcula total y descuenta saldo
+3. Uso de `request._pedido_es_nuevo` para saber si es creación o edición
+4. `update_fields=['total']` para guardar solo el campo total (eficiente)
+
+**PRÓXIMOS PASOS RECOMENDADOS:**
+- Implementar tests unitarios para validar descuento de saldo
+- Considerar usar transacciones atómicas para operaciones críticas
+- Agregar logs de auditoría para cambios de saldo
 
 ---
 

@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-+ye3din#vjy9f3-eu_+rnpaqh6r4g+8!wgax_ulyi8=-d1w+r5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Apps externas
-    'rest_framework',   # 👈 Asegúrate de tener esta
-    'core',              # tu app principal👈 ESTA LÍNEA DEBE ESTAR
+    'rest_framework',
+    'rest_framework.authtoken',  # ✅ Para autenticación con tokens
+    'core',  # tu app principal
     
 ]
 
@@ -135,3 +136,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# URLs de autenticación
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = '/api/panel/'
+LOGOUT_REDIRECT_URL = '/admin/login/'

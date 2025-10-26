@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Panel de Cliente{% endblock %} - Burritos To Go</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+        
+        .saldo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .nav-menu {
+            background: white;
+            padding: 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .nav-menu li {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .nav-menu a {
+            display: block;
+            padding: 20px 30px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .nav-menu a:hover {
+            background: #f8f9fa;
+            border-bottom-color: #667eea;
+            color: #667eea;
+        }
+        
+        .nav-menu a.active {
+            background: #667eea;
+            color: white;
+            border-bottom-color: #764ba2;
+        }
+        
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #764ba2;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>🌯 Burritos To Go</h1>
+                <p style="color: #888;">Panel de Cliente</p>
+            </div>
+            <div class="user-info">
+                <p><strong>Usuario:</strong> {{ request.user.username }}</p>
+                <p><strong>Saldo:</strong> <span class="saldo">${{ request.user.saldo }}</span></p>
+                <a href="{% url 'cliente-logout' %}" class="logout-btn">Cerrar Sesión</a>
+            </div>
+        </div>
+        
+        <!-- Navigation Menu -->
+        <div class="nav-menu">
+            <ul>
+                <li><a href="{% url 'cliente-dashboard' %}" class="{% if request.resolver_match.url_name == 'cliente-dashboard' %}active{% endif %}">🏠 Inicio</a></li>
+                <li><a href="{% url 'cliente-menu-view' %}" class="{% if request.resolver_match.url_name == 'cliente-menu-view' %}active{% endif %}">📋 Menú</a></li>
+                <li><a href="{% url 'cliente-hacer-pedido' %}" class="{% if request.resolver_match.url_name == 'cliente-hacer-pedido' %}active{% endif %}">🛒 Hacer Pedido</a></li>
+                <li><a href="{% url 'cliente-mis-pedidos-view' %}" class="{% if request.resolver_match.url_name == 'cliente-mis-pedidos-view' %}active{% endif %}">📦 Mis Pedidos</a></li>
+                <li><a href="{% url 'cliente-recargar-saldo-view' %}" class="{% if request.resolver_match.url_name == 'cliente-recargar-saldo-view' %}active{% endif %}">💰 Recargar Saldo</a></li>
+            </ul>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,479 @@
+{
+	"info": {
+		"name": "Burritos To Go API",
+		"description": "Colección completa de endpoints para la API de Burritos To Go",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Autenticación",
+			"item": [
+				{
+					"name": "1. Registrar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"cliente1\",\n  \"email\": \"cliente1@example.com\",\n  \"password\": \"password123\",\n  \"password2\": \"password123\",\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Pérez\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register/",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "register", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"cliente\",\n  \"password\": \"cliente123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login/",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login", ""]
+						}
+					}
+				},
+				{
+					"name": "3. Ver Mi Perfil",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/mi-perfil/",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "mi-perfil", ""]
+						}
+					}
+				},
+				{
+					"name": "4. Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/logout/",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "logout", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Cliente - Menú",
+			"item": [
+				{
+					"name": "1. Consultar Menú Completo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cliente/menu/",
+							"host": ["{{base_url}}"],
+							"path": ["cliente", "menu", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Cliente - Pedidos",
+			"item": [
+				{
+					"name": "1. Ver Todos Mis Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/cliente/mis-pedidos/",
+							"host": ["{{base_url}}"],
+							"path": ["cliente", "mis-pedidos", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Ver Pedidos Actuales",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/cliente/mis-pedidos/?tipo=actuales",
+							"host": ["{{base_url}}"],
+							"path": ["cliente", "mis-pedidos", ""],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "actuales"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "3. Ver Pedidos Pasados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/cliente/mis-pedidos/?tipo=pasados",
+							"host": ["{{base_url}}"],
+							"path": ["cliente", "mis-pedidos", ""],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "pasados"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "4. Crear Pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productos\": [1, 5]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/crear_pedido/",
+							"host": ["{{base_url}}"],
+							"path": ["crear_pedido", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Cliente - Saldo",
+			"item": [
+				{
+					"name": "1. Consultar Mi Saldo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/cliente/mi-saldo/",
+							"host": ["{{base_url}}"],
+							"path": ["cliente", "mi-saldo", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Recargar Saldo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"monto\": 100.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente/recargar-saldo/",
+							"host": ["{{base_url}}"],
+							"path": ["cliente", "recargar-saldo", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Usuarios",
+			"item": [
+				{
+					"name": "1. Listar Usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/usuarios/",
+							"host": ["{{base_url}}"],
+							"path": ["usuarios", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"nuevo_usuario\",\n  \"email\": \"nuevo@example.com\",\n  \"password\": \"password123\",\n  \"rol\": \"cliente\",\n  \"saldo\": 0.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/usuarios/",
+							"host": ["{{base_url}}"],
+							"path": ["usuarios", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Productos",
+			"item": [
+				{
+					"name": "1. Listar Productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/productos/",
+							"host": ["{{base_url}}"],
+							"path": ["productos", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Crear Producto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Burrito Vegetariano\",\n  \"descripcion\": \"Burrito con verduras frescas\",\n  \"precio\": 70.00,\n  \"categoria\": 1,\n  \"activo\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/productos/",
+							"host": ["{{base_url}}"],
+							"path": ["productos", ""]
+						}
+					}
+				},
+				{
+					"name": "3. Actualizar Producto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Burrito Vegetariano Premium\",\n  \"descripcion\": \"Burrito con verduras orgánicas\",\n  \"precio\": 85.00,\n  \"categoria\": 1,\n  \"activo\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/productos/1/",
+							"host": ["{{base_url}}"],
+							"path": ["productos", "1", ""]
+						}
+					}
+				},
+				{
+					"name": "4. Eliminar Producto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/productos/1/",
+							"host": ["{{base_url}}"],
+							"path": ["productos", "1", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Pedidos",
+			"item": [
+				{
+					"name": "1. Listar Todos los Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/pedidos/",
+							"host": ["{{base_url}}"],
+							"path": ["pedidos", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Actualizar Estatus de Pedido",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"estatus\": \"en_proceso\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/pedidos/1/",
+							"host": ["{{base_url}}"],
+							"path": ["pedidos", "1", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Categorías",
+			"item": [
+				{
+					"name": "1. Listar Categorías",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categorias/",
+							"host": ["{{base_url}}"],
+							"path": ["categorias", ""]
+						}
+					}
+				},
+				{
+					"name": "2. Crear Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Ensaladas\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/categorias/",
+							"host": ["{{base_url}}"],
+							"path": ["categorias", ""]
+						}
+					}
+				}
+			]
+		}
+	]
+}

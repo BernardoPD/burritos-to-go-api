@@ -1,0 +1,47 @@
+{% extends 'core/base_cliente.html' %}
+
+{% block title %}Hacer Pedido{% endblock %}
+
+{% block content %}
+<h2 style="color: #667eea; margin-bottom: 30px;">🛒 Hacer un Pedido</h2>
+
+<div class="alert alert-info">
+    <strong>Tu saldo actual:</strong> ${{ request.user.saldo }}
+</div>
+
+<form method="post" action="{% url 'cliente-hacer-pedido' %}">
+    {% csrf_token %}
+    
+    {% for categoria in categorias %}
+    <div class="card">
+        <h3>{{ categoria.nombre }}</h3>
+        
+        {% for producto in categoria.producto_set.all %}
+        {% if producto.activo %}
+        <div style="padding: 15px; border-bottom: 1px solid #dee2e6; display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1;">
+                <input type="checkbox" name="productos" value="{{ producto.id }}" id="prod_{{ producto.id }}" style="width: auto; margin-right: 10px;">
+                <label for="prod_{{ producto.id }}" style="cursor: pointer; margin: 0;">
+                    <strong>{{ producto.nombre }}</strong> - {{ producto.descripcion }}
+                </label>
+            </div>
+            <div style="font-size: 18px; font-weight: bold; color: #28a745; min-width: 100px; text-align: right;">
+                ${{ producto.precio }}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+    
+    <div style="margin-top: 30px; text-align: center;">
+        <button type="submit" class="btn btn-success" style="font-size: 18px; padding: 15px 50px;">
+            ✅ Confirmar Pedido
+        </button>
+        <a href="{% url 'cliente-dashboard' %}" class="btn btn-primary" style="font-size: 18px; padding: 15px 50px; background: #6c757d; margin-left: 15px;">
+            ❌ Cancelar
+        </a>
+    </div>
+</form>
+
+{% endblock %}

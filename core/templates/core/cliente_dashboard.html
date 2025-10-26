@@ -1,0 +1,80 @@
+{% extends 'core/base_cliente.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<h2 style="color: #667eea; margin-bottom: 30px;">Bienvenido, {{ request.user.username }}!</h2>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+    <!-- Card Saldo -->
+    <div class="card" style="border-left-color: #28a745;">
+        <h3>💰 Tu Saldo</h3>
+        <p style="font-size: 36px; font-weight: bold; color: #28a745; margin: 20px 0;">${{ request.user.saldo }}</p>
+        <a href="{% url 'cliente-recargar-saldo-view' %}" class="btn btn-success">Recargar Saldo</a>
+    </div>
+    
+    <!-- Card Pedidos -->
+    <div class="card" style="border-left-color: #17a2b8;">
+        <h3>📦 Mis Pedidos</h3>
+        <p style="font-size: 24px; margin: 20px 0;">{{ total_pedidos }} pedidos realizados</p>
+        <a href="{% url 'cliente-mis-pedidos-view' %}" class="btn btn-primary">Ver Mis Pedidos</a>
+    </div>
+    
+    <!-- Card Menú -->
+    <div class="card" style="border-left-color: #ffc107;">
+        <h3>📋 Menú Disponible</h3>
+        <p style="font-size: 24px; margin: 20px 0;">{{ total_productos }} productos</p>
+        <a href="{% url 'cliente-menu-view' %}" class="btn btn-primary">Ver Menú</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3>🚀 Acciones Rápidas</h3>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+        <a href="{% url 'cliente-hacer-pedido' %}" class="btn btn-success" style="flex: 1; min-width: 200px; text-align: center;">
+            🛒 Hacer un Pedido
+        </a>
+        <a href="{% url 'cliente-menu-view' %}" class="btn btn-primary" style="flex: 1; min-width: 200px; text-align: center;">
+            📋 Ver Menú
+        </a>
+        <a href="{% url 'cliente-recargar-saldo-view' %}" class="btn btn-success" style="flex: 1; min-width: 200px; text-align: center;">
+            💰 Recargar Saldo
+        </a>
+    </div>
+</div>
+
+{% if pedidos_recientes %}
+<div class="card" style="margin-top: 30px;">
+    <h3>📦 Pedidos Recientes</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estatus</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos_recientes %}
+            <tr>
+                <td>#{{ pedido.id }}</td>
+                <td>{{ pedido.fecha|date:"d/m/Y H:i" }}</td>
+                <td>${{ pedido.total }}</td>
+                <td>
+                    {% if pedido.estatus == 'pendiente' %}
+                        <span style="background: #ffc107; padding: 5px 10px; border-radius: 4px; color: #000;">Pendiente</span>
+                    {% elif pedido.estatus == 'completado' %}
+                        <span style="background: #28a745; padding: 5px 10px; border-radius: 4px; color: white;">Completado</span>
+                    {% else %}
+                        <span style="background: #6c757d; padding: 5px 10px; border-radius: 4px; color: white;">{{ pedido.estatus }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -37,12 +37,12 @@ class Pedido(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        if self.pk:  # Solo al crear
-            super().save(*args, **kwargs)  # Necesario para poder usar .productos
-            self.total = sum(p.precio for p in self.productos.all())
-            super().save(update_fields=['total'])
-        else:
-            super().save(*args, **kwargs)
+        """
+        Guarda el pedido. El total se calcula en otros lugares:
+        - En admin.py usando save_related() después de guardar productos
+        - En views.py calculando antes de guardar
+        """
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Pedido #{self.id} - {self.cliente.username}"
