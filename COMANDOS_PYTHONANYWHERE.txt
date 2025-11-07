@@ -1,0 +1,201 @@
+=================================================================
+COMANDOS PARA COPIAR Y PEGAR EN PYTHONANYWHERE
+=================================================================
+
+IMPORTANTE: Reemplaza "TU_USUARIO" con tu usuario de PythonAnywhere
+
+=================================================================
+PASO 1: CLONAR REPOSITORIO
+=================================================================
+
+git clone https://github.com/BernardoPD/burritos-to-go-api.git burritos_to_go
+cd burritos_to_go
+
+=================================================================
+PASO 2: CREAR VIRTUAL ENVIRONMENT
+=================================================================
+
+python3.10 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+=================================================================
+PASO 3: EDITAR SETTINGS.PY
+=================================================================
+
+# Abrir editor:
+nano burritos_project/settings.py
+
+# O usar el editor web de PythonAnywhere en:
+# Files → burritos_to_go → burritos_project → settings.py
+
+# CAMBIAR estas líneas (líneas 78-89):
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'TU_USUARIO$burritos_db',
+        'USER': 'TU_USUARIO',
+        'PASSWORD': 'tu_password_mysql_aqui',
+        'HOST': 'TU_USUARIO.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        }
+    }
+}
+
+# CAMBIAR también (línea 26):
+DEBUG = False
+
+# CAMBIAR también (línea 28):
+ALLOWED_HOSTS = ['TU_USUARIO.pythonanywhere.com', 'localhost', '127.0.0.1']
+
+# Guardar y salir (si usas nano: Ctrl+X, luego Y, luego Enter)
+
+=================================================================
+PASO 4: MIGRAR BASE DE DATOS
+=================================================================
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+
+# Te pedirá:
+# - Username: (ej: admin)
+# - Email: tu_email@ejemplo.com
+# - Password: (contraseña segura)
+# - Password (again): (repetir contraseña)
+
+=================================================================
+PASO 5: RECOLECTAR ARCHIVOS ESTÁTICOS
+=================================================================
+
+python manage.py collectstatic --noinput
+
+=================================================================
+PASO 6: CONFIGURAR WEB APP
+=================================================================
+
+# En el navegador:
+# 1. Ve a la pestaña "Web"
+# 2. Click "Add a new web app"
+# 3. Selecciona Python 3.10
+# 4. Selecciona "Manual configuration"
+
+# Configurar WSGI:
+# 1. En la sección "Code", click en el archivo WSGI
+# 2. BORRA TODO el contenido
+# 3. PEGA esto (¡reemplaza TU_USUARIO!):
+
+import os
+import sys
+
+path = '/home/TU_USUARIO/burritos_to_go'
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'burritos_project.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+# 4. Guarda (Ctrl+S o botón Save)
+
+# Configurar Virtualenv:
+# En la sección "Virtualenv", ingresa:
+/home/TU_USUARIO/burritos_to_go/venv
+
+# Configurar Static Files:
+# En la sección "Static files", añade:
+# URL: /static/
+# Directory: /home/TU_USUARIO/burritos_to_go/static
+
+=================================================================
+PASO 7: RELOAD Y PROBAR
+=================================================================
+
+# Click el botón verde "Reload" en la pestaña Web
+
+# Visita tu sitio:
+# https://TU_USUARIO.pythonanywhere.com/
+
+# Probar admin:
+# https://TU_USUARIO.pythonanywhere.com/admin/
+
+# Probar API:
+# https://TU_USUARIO.pythonanywhere.com/api/
+
+=================================================================
+COMANDOS DE DIAGNÓSTICO (si hay problemas)
+=================================================================
+
+# Ver versión de Python
+python --version
+
+# Ver paquetes instalados
+pip list
+
+# Verificar migraciones
+python manage.py showmigrations
+
+# Probar conexión a base de datos
+python manage.py dbshell
+
+# Reinstalar dependencias
+pip install -r requirements.txt --force-reinstall
+
+# Ver logs en tiempo real
+tail -f /var/log/TU_USUARIO.pythonanywhere.com.error.log
+
+=================================================================
+CREAR USUARIOS DE PRUEBA (OPCIONAL)
+=================================================================
+
+python crear_usuarios_prueba.py
+
+# Esto creará usuarios de prueba para el sistema
+
+=================================================================
+ACTUALIZAR EN EL FUTURO
+=================================================================
+
+cd ~/burritos_to_go
+source venv/bin/activate
+git pull origin main
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py collectstatic --noinput
+# Luego Reload en la pestaña Web
+
+=================================================================
+ENDPOINTS DISPONIBLES
+=================================================================
+
+Base URL: https://TU_USUARIO.pythonanywhere.com
+
+Admin:
+  /admin/
+
+API Root:
+  /api/
+
+Clientes:
+  POST   /api/clientes/registro/
+  POST   /api/clientes/login/
+  GET    /api/clientes/menu/
+  GET    /api/clientes/pedidos/
+  POST   /api/clientes/pedidos/
+  GET    /api/clientes/pedidos/<id>/
+  PUT    /api/clientes/pedidos/<id>/
+  DELETE /api/clientes/pedidos/<id>/
+  GET    /api/clientes/perfil/
+  PUT    /api/clientes/perfil/
+
+Panel Empleado:
+  /api/panel/
+
+=================================================================
+¡LISTO! Tu API está en producción
+=================================================================
