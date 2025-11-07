@@ -1,0 +1,215 @@
+═══════════════════════════════════════════════════════════════════
+COMANDOS EXACTOS PARA pradodiazbackend.pythonanywhere.com
+═══════════════════════════════════════════════════════════════════
+
+Usuario: pradodiazbackend
+URL: https://pradodiazbackend.pythonanywhere.com
+Repo: https://github.com/BernardoPD/burritos-to-go-api.git
+
+═══════════════════════════════════════════════════════════════════
+PASO 1: CLONAR Y CONFIGURAR (En Bash Console)
+═══════════════════════════════════════════════════════════════════
+
+git clone https://github.com/BernardoPD/burritos-to-go-api.git burritos_to_go
+cd burritos_to_go
+python3.10 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+═══════════════════════════════════════════════════════════════════
+PASO 2: CREAR BASE DE DATOS MYSQL
+═══════════════════════════════════════════════════════════════════
+
+1. Ve a pestaña "Databases"
+2. Crea una contraseña MySQL
+3. Crea database con nombre: pradodiazbackend$burritos_db
+
+Anota tus credenciales:
+Host: pradodiazbackend.mysql.pythonanywhere-services.com
+Database: pradodiazbackend$burritos_db
+User: pradodiazbackend
+Password: _____________________ (la que acabas de crear)
+
+═══════════════════════════════════════════════════════════════════
+PASO 3: EDITAR SETTINGS.PY
+═══════════════════════════════════════════════════════════════════
+
+Abre: Files → burritos_to_go → burritos_project → settings.py
+
+LÍNEAS 78-89, reemplazar con:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pradodiazbackend$burritos_db',
+        'USER': 'pradodiazbackend',
+        'PASSWORD': 'TU_PASSWORD_MYSQL_AQUI',
+        'HOST': 'pradodiazbackend.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        }
+    }
+}
+
+LÍNEA 26, cambiar a:
+DEBUG = False
+
+LÍNEA 28, cambiar a:
+ALLOWED_HOSTS = ['pradodiazbackend.pythonanywhere.com', 'localhost', '127.0.0.1']
+
+GUARDAR (Ctrl+S)
+
+═══════════════════════════════════════════════════════════════════
+PASO 4: MIGRAR BASE DE DATOS (En Bash Console)
+═══════════════════════════════════════════════════════════════════
+
+cd ~/burritos_to_go
+source venv/bin/activate
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+
+Cuando te pida datos del superuser, anota:
+Username: _____________________
+Email: _____________________
+Password: _____________________
+
+═══════════════════════════════════════════════════════════════════
+PASO 5: RECOLECTAR ARCHIVOS ESTÁTICOS (En Bash Console)
+═══════════════════════════════════════════════════════════════════
+
+python manage.py collectstatic --noinput
+
+═══════════════════════════════════════════════════════════════════
+PASO 6: CONFIGURAR WEB APP
+═══════════════════════════════════════════════════════════════════
+
+A) Crear Web App:
+   1. Pestaña "Web"
+   2. "Add a new web app"
+   3. Python 3.10
+   4. Manual configuration
+
+B) Configurar WSGI:
+   1. En sección "Code", click archivo WSGI
+   2. BORRAR TODO
+   3. PEGAR esto:
+
+import os
+import sys
+
+path = '/home/pradodiazbackend/burritos_to_go'
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'burritos_project.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+   4. GUARDAR (Ctrl+S)
+
+C) Configurar Virtualenv:
+   En sección "Virtualenv", ingresar:
+   /home/pradodiazbackend/burritos_to_go/venv
+
+D) Configurar Static Files:
+   En sección "Static files", añadir:
+   URL: /static/
+   Directory: /home/pradodiazbackend/burritos_to_go/static
+
+═══════════════════════════════════════════════════════════════════
+PASO 7: RELOAD Y PROBAR
+═══════════════════════════════════════════════════════════════════
+
+1. Click botón verde "Reload"
+2. Visitar: https://pradodiazbackend.pythonanywhere.com
+
+═══════════════════════════════════════════════════════════════════
+URLs DE TU API:
+═══════════════════════════════════════════════════════════════════
+
+Homepage:
+https://pradodiazbackend.pythonanywhere.com/
+
+Admin:
+https://pradodiazbackend.pythonanywhere.com/admin/
+
+API Root:
+https://pradodiazbackend.pythonanywhere.com/api/
+
+API Clientes:
+https://pradodiazbackend.pythonanywhere.com/api/clientes/
+
+Endpoints específicos:
+POST   https://pradodiazbackend.pythonanywhere.com/api/clientes/registro/
+POST   https://pradodiazbackend.pythonanywhere.com/api/clientes/login/
+GET    https://pradodiazbackend.pythonanywhere.com/api/clientes/menu/
+GET    https://pradodiazbackend.pythonanywhere.com/api/clientes/pedidos/
+POST   https://pradodiazbackend.pythonanywhere.com/api/clientes/pedidos/
+GET    https://pradodiazbackend.pythonanywhere.com/api/clientes/pedidos/<id>/
+PUT    https://pradodiazbackend.pythonanywhere.com/api/clientes/pedidos/<id>/
+DELETE https://pradodiazbackend.pythonanywhere.com/api/clientes/pedidos/<id>/
+GET    https://pradodiazbackend.pythonanywhere.com/api/clientes/perfil/
+PUT    https://pradodiazbackend.pythonanywhere.com/api/clientes/perfil/
+
+Panel Empleado:
+https://pradodiazbackend.pythonanywhere.com/api/panel/
+
+═══════════════════════════════════════════════════════════════════
+COMANDOS DE EMERGENCIA
+═══════════════════════════════════════════════════════════════════
+
+Ver logs:
+tail -f /var/log/pradodiazbackend.pythonanywhere.com.error.log
+
+Reinstalar dependencias:
+cd ~/burritos_to_go
+source venv/bin/activate
+pip install -r requirements.txt --force-reinstall
+
+Verificar migraciones:
+python manage.py showmigrations
+
+Crear usuario de prueba:
+python crear_usuarios_prueba.py
+
+═══════════════════════════════════════════════════════════════════
+ACTUALIZAR EN EL FUTURO
+═══════════════════════════════════════════════════════════════════
+
+cd ~/burritos_to_go
+source venv/bin/activate
+git pull origin main
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py collectstatic --noinput
+# Luego Reload en pestaña Web
+
+═══════════════════════════════════════════════════════════════════
+CHECKLIST ✓
+═══════════════════════════════════════════════════════════════════
+
+[ ] Cloné repositorio
+[ ] Creé virtualenv
+[ ] Instalé dependencias
+[ ] Creé password MySQL
+[ ] Creé database: pradodiazbackend$burritos_db
+[ ] Edité settings.py con credenciales
+[ ] Ejecuté migraciones
+[ ] Creé superuser
+[ ] Ejecuté collectstatic
+[ ] Creé Web App
+[ ] Configuré WSGI
+[ ] Configuré Virtualenv
+[ ] Configuré Static files
+[ ] Hice Reload
+[ ] Sitio funciona ✓
+
+═══════════════════════════════════════════════════════════════════
+
+¡Tu API está lista en https://pradodiazbackend.pythonanywhere.com! 🎉
+
+═══════════════════════════════════════════════════════════════════
