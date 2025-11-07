@@ -1,0 +1,654 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "8k8vyecnpchzqflaujxc5l7szlk2j61d",
+  "fields": {
+    "session_data": ".eJxVjEsOwjAMBe-SNYoaYqc1S_acoXJihxZQIvWzQtydVuoCtm9m3tv0vC5Dv8469aOYi_Hm9LtFTk8tO5AHl3u1qZZlGqPdFXvQ2d6q6Ot6uH8HA8_DVnd0FsUOQFDboAAR2aMgeoSmoRCdS5I5O3HkN5UpJPSOoG2BFLP5fAHP6zda:1vFwP7:wNgIRxnP7yYhOAqrGcAYnCD9bP9zVa8Oddlp1ptf9qo",
+    "expire_date": "2025-11-17T15:23:33.359Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ot4s0kbrt0aiil8yce4uw9lkl2e75mwh",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hCgAsWl-56BzDCMVA0kpV0Z765NutDtf-_9l4iwrSVuPS9xJnERWpx-N4T0yHUHdId6azK1ui4zyl2RB-1yapSf18P9OyjQy7d2GAzxOChjMJwthIEVKu85KasIHHhvHWlkShqDTdYmA4ECI7NTOIr3B-FyOGU:1vD6ue:MSIxlgPqbTSlTlp1X0bAWDGHGJoLR-Trx0rbQlMNNnE",
+    "expire_date": "2025-11-09T20:00:24.872Z"
+  }
+},
+{
+  "model": "core.usuario",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$cbFHmsl2wffBfJ7sam74us$mihtkX8DPRgZYlsvVTBuotmK2/kx92Ji9gDjvsRpCGY=",
+    "last_login": "2025-11-03T15:14:56.253Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "tenor_prado@yahoo.com.mx",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-10-21T15:37:00.798Z",
+    "rol": "cliente",
+    "saldo": "385.00",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.usuario",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$jxZLy4vTlSq2mBgHhnN34z$OHPOCSDbCbO+bOBX3JlgWGvLlqJD5yIePssxgBfjJzM=",
+    "last_login": "2025-10-30T18:25:55.888Z",
+    "is_superuser": false,
+    "username": "cliente",
+    "first_name": "Luis",
+    "last_name": "Ortega",
+    "email": "secretariaecoccurso@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-10-26T18:46:52.508Z",
+    "rol": "cliente",
+    "saldo": "600.00",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.usuario",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$zwGAyu1k93YcJBJuGPbk9T$jXRb105QKT4bj9OBTH5az/srUO/juKedII7jay95tSs=",
+    "last_login": "2025-11-03T15:23:33.358Z",
+    "is_superuser": false,
+    "username": "cliente1",
+    "first_name": "Juan",
+    "last_name": "Pérez",
+    "email": "cliente1@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-03T14:46:31.396Z",
+    "rol": "cliente",
+    "saldo": "710.00",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.usuario",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$yjH49mQOoU2nyhW7ODOxh6$jre6L8QEfENM25ekPT3rWIOUvoYiUMLP/WpNR294TUc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "cliente2",
+    "first_name": "María",
+    "last_name": "García",
+    "email": "cliente2@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-03T14:46:32.097Z",
+    "rol": "cliente",
+    "saldo": "300.00",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.categoria",
+  "pk": 1,
+  "fields": {
+    "nombre": "Comidas"
+  }
+},
+{
+  "model": "core.categoria",
+  "pk": 2,
+  "fields": {
+    "nombre": "Bebidas"
+  }
+},
+{
+  "model": "core.categoria",
+  "pk": 3,
+  "fields": {
+    "nombre": "Postres"
+  }
+},
+{
+  "model": "core.producto",
+  "pk": 1,
+  "fields": {
+    "nombre": "Burrito Clásico",
+    "descripcion": "Tortilla rellena de carne",
+    "precio": "55.00",
+    "categoria": 1,
+    "activo": true
+  }
+},
+{
+  "model": "core.producto",
+  "pk": 2,
+  "fields": {
+    "nombre": "Agua Natural",
+    "descripcion": "Botella de\r\n500ml",
+    "precio": "15.00",
+    "categoria": 2,
+    "activo": true
+  }
+},
+{
+  "model": "core.producto",
+  "pk": 3,
+  "fields": {
+    "nombre": "Hamburguesa BBQ",
+    "descripcion": "Con\r\ncebolla caramelizada",
+    "precio": "65.00",
+    "categoria": 1,
+    "activo": true
+  }
+},
+{
+  "model": "core.producto",
+  "pk": 4,
+  "fields": {
+    "nombre": "Galleta integral",
+    "descripcion": "Hecha\r\ncon avena y miel",
+    "precio": "20.00",
+    "categoria": 3,
+    "activo": true
+  }
+},
+{
+  "model": "core.producto",
+  "pk": 5,
+  "fields": {
+    "nombre": "Refresco 600ml",
+    "descripcion": "Bebida\r\nazucarada sabor cola",
+    "precio": "25.00",
+    "categoria": 2,
+    "activo": true
+  }
+},
+{
+  "model": "core.producto",
+  "pk": 6,
+  "fields": {
+    "nombre": "Pastel de Limon",
+    "descripcion": "REbanada de aire",
+    "precio": "700.00",
+    "categoria": 3,
+    "activo": true
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 5,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "180.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-24T04:04:38.595Z",
+    "productos": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 6,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "0.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T16:25:57.166Z",
+    "productos": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 7,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "0.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T16:52:08.924Z",
+    "productos": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 8,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "0.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T16:53:01.988Z",
+    "productos": [
+      1,
+      3,
+      4
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 9,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "0.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T17:02:07.170Z",
+    "productos": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 10,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "120.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T17:10:53.422Z",
+    "productos": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 11,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "80.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T19:55:53.247Z",
+    "productos": [
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 12,
+  "fields": {
+    "cliente": [
+      "admin"
+    ],
+    "total": "15.00",
+    "estatus": "pendiente",
+    "fecha": "2025-10-26T20:13:23.771Z",
+    "productos": [
+      2
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 13,
+  "fields": {
+    "cliente": [
+      "cliente1"
+    ],
+    "total": "160.00",
+    "estatus": "pendiente",
+    "fecha": "2025-11-03T16:06:34.132Z",
+    "productos": [
+      1,
+      2,
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "core.pedido",
+  "pk": 14,
+  "fields": {
+    "cliente": [
+      "cliente1"
+    ],
+    "total": "80.00",
+    "estatus": "pendiente",
+    "fecha": "2025-11-03T18:51:53.867Z",
+    "productos": [
+      1,
+      5
+    ]
+  }
+},
+{
+  "model": "authtoken.token",
+  "pk": "cfd391e155dcc39b6cb2715b62768ecf9544072d",
+  "fields": {
+    "user": [
+      "cliente1"
+    ],
+    "created": "2025-11-03T15:23:33.352Z"
+  }
+},
+{
+  "model": "authtoken.token",
+  "pk": "e8e83686ff9031d8a2af93ad6309f9f231770f85",
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "created": "2025-11-03T14:49:15.965Z"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-10-24T03:27:59.376Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "1",
+    "object_repr": "Pedido #1 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-10-24T03:42:37.493Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "2",
+    "object_repr": "Pedido #2 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-10-24T03:43:02.601Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "2",
+    "object_repr": "Pedido #2 - admin",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-10-24T03:43:07.244Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "1",
+    "object_repr": "Pedido #1 - admin",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-10-24T03:44:17.292Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "3",
+    "object_repr": "Pedido #3 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-10-24T03:53:32.939Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "3",
+    "object_repr": "Pedido #3 - admin",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-10-24T03:54:29.554Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "4",
+    "object_repr": "Pedido #4 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-10-24T04:02:56.479Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "4",
+    "object_repr": "Pedido #4 - admin",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2025-10-24T04:04:38.605Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "5",
+    "object_repr": "Pedido #5 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2025-10-26T16:25:57.177Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "6",
+    "object_repr": "Pedido #6 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2025-10-26T16:52:08.939Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "7",
+    "object_repr": "Pedido #7 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2025-10-26T16:53:02.004Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "8",
+    "object_repr": "Pedido #8 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2025-10-26T17:02:07.184Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "9",
+    "object_repr": "Pedido #9 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2025-10-26T17:10:53.435Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "pedido"
+    ],
+    "object_id": "10",
+    "object_repr": "Pedido #10 - admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2025-10-26T18:46:52.593Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "usuario"
+    ],
+    "object_id": "2",
+    "object_repr": "cliente",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2025-10-26T18:47:15.528Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "core",
+      "usuario"
+    ],
+    "object_id": "2",
+    "object_repr": "cliente",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Saldo\"]}}]"
+  }
+}
+]

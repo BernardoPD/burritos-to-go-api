@@ -14,7 +14,7 @@
 Host: pradodiazbackend.mysql.pythonanywhere-services.com
 Database: pradodiazbackend$burritos_db
 User: pradodiazbackend
-Password: [La que crees en la pestaña Databases]
+Password: AplicaweB2025
 Port: 3306
 ```
 

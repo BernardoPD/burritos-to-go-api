@@ -1,0 +1,154 @@
+═══════════════════════════════════════════════════════════════════
+COMANDOS PARA IMPORTAR BASE DE DATOS EN PYTHONANYWHERE
+═══════════════════════════════════════════════════════════════════
+
+Archivo de datos: burritos_db_data.json
+Ubicación: Ya incluido en el repositorio de GitHub
+
+═══════════════════════════════════════════════════════════════════
+OPCIÓN 1: IMPORTAR CON DATOS DE PRUEBA (RECOMENDADO)
+═══════════════════════════════════════════════════════════════════
+
+Ejecuta estos comandos en la Bash Console de PythonAnywhere:
+
+cd ~/burritos_to_go
+source venv/bin/activate
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata burritos_db_data.json
+python manage.py collectstatic --noinput
+
+Salida esperada:
+"Installed 45 object(s) from 1 fixture(s)"
+
+═══════════════════════════════════════════════════════════════════
+OPCIÓN 2: BASE DE DATOS VACÍA (SIN DATOS DE PRUEBA)
+═══════════════════════════════════════════════════════════════════
+
+cd ~/burritos_to_go
+source venv/bin/activate
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py collectstatic --noinput
+
+═══════════════════════════════════════════════════════════════════
+VERIFICAR LA IMPORTACIÓN
+═══════════════════════════════════════════════════════════════════
+
+python manage.py shell
+
+Dentro del shell:
+
+from core.models import Usuario, Producto, Pedido
+print(f"Usuarios: {Usuario.objects.count()}")
+print(f"Productos: {Producto.objects.count()}")
+print(f"Pedidos: {Pedido.objects.count()}")
+exit()
+
+═══════════════════════════════════════════════════════════════════
+DATOS INCLUIDOS EN burritos_db_data.json
+═══════════════════════════════════════════════════════════════════
+
+USUARIOS:
+├─ admin (superusuario)
+│  └─ Email: tenor_prado@yahoo.com.mx
+│  └─ Saldo: $385.00
+│
+├─ cliente (usuario prueba)
+│  └─ Nombre: Luis Ortega
+│  └─ Saldo: $0.00
+│
+├─ empleado1 (empleado prueba)
+│
+└─ cliente2 (cliente prueba)
+   └─ Saldo: $500.00
+
+PRODUCTOS DEL MENÚ:
+├─ Burrito Clásico de Carne - $50.00
+├─ Burrito de Pollo - $45.00
+├─ Burrito Vegetariano - $40.00
+├─ Quesadilla - $35.00
+├─ Tacos (3 piezas) - $30.00
+├─ Nachos con Queso - $25.00
+├─ Refresco - $15.00
+└─ Agua - $10.00
+
+PEDIDOS:
+└─ Varios pedidos de prueba en diferentes estados
+
+═══════════════════════════════════════════════════════════════════
+CAMBIAR PASSWORD DEL ADMIN (DESPUÉS DE IMPORTAR)
+═══════════════════════════════════════════════════════════════════
+
+python manage.py changepassword admin
+
+═══════════════════════════════════════════════════════════════════
+RESETEAR BASE DE DATOS (SI ES NECESARIO)
+═══════════════════════════════════════════════════════════════════
+
+# Borrar todos los datos
+python manage.py flush
+
+# Volver a importar
+python manage.py loaddata burritos_db_data.json
+
+═══════════════════════════════════════════════════════════════════
+PROBLEMAS COMUNES
+═══════════════════════════════════════════════════════════════════
+
+Error: "No such table"
+Solución: python manage.py migrate
+
+Error: "IntegrityError"
+Solución: La BD ya tiene datos, usar flush primero
+
+Error: "Could not load core.Usuario"
+Solución: python manage.py showmigrations && python manage.py migrate
+
+═══════════════════════════════════════════════════════════════════
+FLUJO COMPLETO RECOMENDADO
+═══════════════════════════════════════════════════════════════════
+
+# 1. Después de configurar settings.py
+cd ~/burritos_to_go
+source venv/bin/activate
+
+# 2. Migraciones
+python manage.py makemigrations
+python manage.py migrate
+
+# 3. Importar datos
+python manage.py loaddata burritos_db_data.json
+
+# 4. Verificar
+python manage.py shell
+>>> from core.models import Producto
+>>> Producto.objects.all()
+>>> exit()
+
+# 5. Collectstatic
+python manage.py collectstatic --noinput
+
+# 6. Configurar Web App y hacer Reload
+
+# 7. Probar en navegador
+https://pradodiazbackend.pythonanywhere.com/api/clientes/menu/
+
+═══════════════════════════════════════════════════════════════════
+CHECKLIST
+═══════════════════════════════════════════════════════════════════
+
+[ ] Migraciones ejecutadas (migrate)
+[ ] Datos importados (loaddata)
+[ ] Verificado en shell (count de registros)
+[ ] Collectstatic ejecutado
+[ ] Web app reload hecho
+[ ] Probado admin: /admin/
+[ ] Probado API: /api/clientes/menu/
+
+═══════════════════════════════════════════════════════════════════
+
+¡La base de datos local ya está lista para PythonAnywhere! 🎉
+
+═══════════════════════════════════════════════════════════════════
