@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Burritos To Go</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .login-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 15px;
+            position: relative;
+            color: #999;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #764ba2;
+        }
+
+        .demo-credentials {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .demo-credentials h3 {
+            color: #333;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .demo-credentials p {
+            color: #666;
+            font-size: 0.85em;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🌯</h1>
+            <h1>Burritos To Go</h1>
+            <p>Iniciar Sesión</p>
+        </div>
+
+        <div class="login-body">
+            <div id="alert" class="alert"></div>
+
+            <div class="demo-credentials">
+                <h3>🔑 Credenciales de Prueba:</h3>
+                <p><strong>Admin:</strong> admin / admin123</p>
+                <p><strong>Cliente:</strong> cliente1 / password123</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" required placeholder="Ingresa tu usuario">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required placeholder="Ingresa tu contraseña">
+                </div>
+
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+                
+                <div class="loading" id="loading">
+                    <p>Iniciando sesión...</p>
+                </div>
+            </form>
+
+            <div class="divider">
+                <span>O</span>
+            </div>
+
+            <div class="links">
+                <a href="/api-auth/login/">Usar Login de Django REST Framework</a>
+            </div>
+
+            <div class="back-link">
+                <a href="/api/menu/">← Volver al Menú de APIs</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const alertDiv = document.getElementById('alert');
+            const loadingDiv = document.getElementById('loading');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            // Mostrar loading
+            loadingDiv.classList.add('show');
+            submitBtn.disabled = true;
+            alertDiv.classList.remove('show');
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/auth/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                loadingDiv.classList.remove('show');
+                submitBtn.disabled = false;
+                
+                if (response.ok) {
+                    // Login exitoso
+                    alertDiv.textContent = '✅ ' + data.mensaje;
+                    alertDiv.className = 'alert alert-success show';
+                    
+                    // Guardar token y datos de usuario
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
+                    if (data.usuario) {
+                        localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                    }
+                    
+                    // Redirigir después de 1 segundo
+                    setTimeout(() => {
+                        window.location.href = '/api/menu/';
+                    }, 1000);
+                } else {
+                    // Error en login
+                    alertDiv.textContent = '❌ ' + (data.error || 'Error al iniciar sesión');
+                    alertDiv.className = 'alert alert-error show';
+                }
+            } catch (error) {
+                loadingDiv.classList.remove('show');
+                submitBtn.disabled = false;
+                alertDiv.textContent = '❌ Error de conexión con el servidor';
+                alertDiv.className = 'alert alert-error show';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

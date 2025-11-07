@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Burritos To Go</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .register-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .register-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .register-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .register-body {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>🌯</h1>
+            <h1>Burritos To Go</h1>
+            <p>Crear Cuenta Nueva</p>
+        </div>
+
+        <div class="register-body">
+            <div id="alert" class="alert"></div>
+
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name">Nombre</label>
+                        <input type="text" id="first_name" name="first_name" required placeholder="Juan">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name">Apellido</label>
+                        <input type="text" id="last_name" name="last_name" required placeholder="Pérez">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" required placeholder="usuario123">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required placeholder="Mínimo 6 caracteres">
+                </div>
+
+                <div class="form-group">
+                    <label for="password2">Confirmar Contraseña</label>
+                    <input type="password" id="password2" name="password2" required placeholder="Repite tu contraseña">
+                </div>
+
+                <button type="submit" class="btn-register">Registrarse</button>
+                
+                <div class="loading" id="loading">
+                    <p>Creando cuenta...</p>
+                </div>
+            </form>
+
+            <div class="links">
+                <p>¿Ya tienes cuenta? <a href="/login/">Inicia Sesión</a></p>
+            </div>
+
+            <div class="back-link">
+                <a href="/api/menu/">← Volver al Menú de APIs</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const alertDiv = document.getElementById('alert');
+            const loadingDiv = document.getElementById('loading');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password2').value;
+            
+            // Validar que las contraseñas coincidan
+            if (password !== password2) {
+                alertDiv.textContent = '❌ Las contraseñas no coinciden';
+                alertDiv.className = 'alert alert-error show';
+                return;
+            }
+            
+            // Mostrar loading
+            loadingDiv.classList.add('show');
+            submitBtn.disabled = true;
+            alertDiv.classList.remove('show');
+            
+            const formData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: password,
+                password2: password2,
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value
+            };
+            
+            try {
+                const response = await fetch('/api/auth/register/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                loadingDiv.classList.remove('show');
+                submitBtn.disabled = false;
+                
+                if (response.ok) {
+                    // Registro exitoso
+                    alertDiv.textContent = '✅ ' + data.mensaje;
+                    alertDiv.className = 'alert alert-success show';
+                    
+                    // Guardar token y datos de usuario
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                    }
+                    if (data.usuario) {
+                        localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                    }
+                    
+                    // Redirigir después de 1.5 segundos
+                    setTimeout(() => {
+                        window.location.href = '/api/menu/';
+                    }, 1500);
+                } else {
+                    // Error en registro
+                    let errorMsg = data.error || 'Error al registrar usuario';
+                    if (data.detalles) {
+                        errorMsg += ': ' + JSON.stringify(data.detalles);
+                    }
+                    alertDiv.textContent = '❌ ' + errorMsg;
+                    alertDiv.className = 'alert alert-error show';
+                }
+            } catch (error) {
+                loadingDiv.classList.remove('show');
+                submitBtn.disabled = false;
+                alertDiv.textContent = '❌ Error de conexión con el servidor';
+                alertDiv.className = 'alert alert-error show';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

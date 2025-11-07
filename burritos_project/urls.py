@@ -17,8 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from core.views import index_view, login_page_view, register_page_view
 
 urlpatterns = [
+    path('', index_view, name='home'),
+    path('login/', login_page_view, name='login-page'),
+    path('register/', register_page_view, name='register-page'),
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
     # ✅ Login/Logout de Django REST Framework

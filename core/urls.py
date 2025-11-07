@@ -25,6 +25,8 @@ from .views import (
     cliente_logout_view,
     # Vista web para panel de admin
     admin_dashboard,
+    # Vista para menú de APIs
+    api_menu_view,
 )
 
 router = DefaultRouter()
@@ -34,6 +36,9 @@ router.register(r'pedidos', PedidoViewSet)
 router.register(r'usuarios', UsuarioViewSet)
 
 urlpatterns = [
+    # ==================== MENÚ DE APIs ====================
+    path('menu/', api_menu_view, name='api-menu'),
+    
     # Rutas del router
     path('', include(router.urls)),
     

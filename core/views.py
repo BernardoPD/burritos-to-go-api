@@ -16,6 +16,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import models
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
@@ -128,6 +130,10 @@ class CrearPedidoView(APIView):
 
 # ==================== VISTAS DE AUTENTICACIÓN ====================
 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
     """
     Vista para login de usuarios.
@@ -573,3 +579,29 @@ def admin_dashboard(request):
         'ultimos_usuarios': ultimos_usuarios,
         'categorias_stats': categorias_stats,
     })
+
+# ==================== VISTA PARA MENÚ DE APIs ====================
+def api_menu_view(request):
+    """
+    Vista que muestra el menú interactivo de todas las APIs disponibles.
+    Dividido en secciones: Admin, Cliente y Autenticación.
+    """
+    return render(request, 'api_menu.html')
+
+def index_view(request):
+    """
+    Vista de inicio que muestra las opciones principales del sistema.
+    """
+    return render(request, 'index.html')
+
+def login_page_view(request):
+    """
+    Vista que muestra la página de login personalizada.
+    """
+    return render(request, 'login.html')
+
+def register_page_view(request):
+    """
+    Vista que muestra la página de registro personalizada.
+    """
+    return render(request, 'register.html')

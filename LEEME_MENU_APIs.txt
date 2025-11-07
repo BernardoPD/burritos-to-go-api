@@ -1,0 +1,264 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║            🌯 BURRITOS TO GO - MENÚ VISUAL DE APIs 🌯                    ║
+║                                                                           ║
+║                        ¡ACCESO FÁCIL Y PROFESIONAL!                      ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  ⚡ INICIO RÁPIDO EN 3 PASOS                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  1️⃣  Abre PowerShell y ejecuta:
+      
+      cd "D:\PRADO\UTH 2025-3\APLICACION WEB\Files\U3\burritos_to_go"
+      .\venv\Scripts\Activate.ps1
+      python manage.py runserver
+
+  2️⃣  Abre tu navegador en:
+      
+      http://127.0.0.1:8000/api/menu/
+
+  3️⃣  ¡Haz clic en cualquier API para probarla!
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📋 ¿QUÉ ES EL MENÚ VISUAL?                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Es una interfaz web profesional que te permite acceder a TODAS las APIs
+  del sistema sin escribir URLs manualmente.
+
+  ✨ Características:
+  
+     ✅ 30+ APIs organizadas por categoría
+     ✅ Pestañas separadas: Admin, Cliente, Autenticación
+     ✅ Un clic para probar cada API
+     ✅ Diseño moderno y profesional
+     ✅ Funciona en móvil, tablet y desktop
+     ✅ Sin necesidad de recordar URLs
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🎯 APIS DISPONIBLES                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  🔐 ADMINISTRADOR (19 endpoints)
+  ├── 📦 Productos (6)
+  │   • Listar, Crear, Ver, Actualizar, Actualizar parcial, Eliminar
+  │
+  ├── 🏷️  Categorías (5)
+  │   • Listar, Crear, Ver, Actualizar, Eliminar
+  │
+  ├── 📝 Pedidos (4)
+  │   • Listar, Ver, Actualizar estado, Cancelar
+  │
+  └── 👥 Usuarios (4)
+      • Listar, Ver, Actualizar, Eliminar
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  👤 CLIENTE (6 endpoints)
+  ├── 🔍 Consultas
+  │   • Ver menú
+  │   • Mis pedidos
+  │   • Mi saldo
+  │   • Mi perfil
+  │
+  └── ⚡ Acciones
+      • Crear pedido
+      • Recargar saldo
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  🔑 AUTENTICACIÓN (5 endpoints)
+  • Registro de usuario
+  • Iniciar sesión
+  • Cerrar sesión
+  • Ver perfil
+  • Panel web Django REST
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🎨 CARACTERÍSTICAS VISUALES                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  🎨 Diseño Profesional
+     • Gradientes modernos
+     • Tarjetas interactivas
+     • Efectos hover elegantes
+     • Animaciones suaves
+
+  🎯 Organización Clara
+     • Pestañas por rol (Admin/Cliente/Auth)
+     • Categorías por funcionalidad
+     • Códigos de color por método HTTP
+
+  📱 Responsive Design
+     • Se adapta a cualquier pantalla
+     • Funciona en móviles
+     • Compatible con tablets
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🔍 INFORMACIÓN EN CADA API                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Cada tarjeta de API muestra:
+
+     ✓ Título descriptivo
+     ✓ Método HTTP con color (GET, POST, PUT, PATCH, DELETE)
+     ✓ Endpoint completo
+     ✓ Descripción detallada de la funcionalidad
+     ✓ Botón "Probar API" para acceso directo
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🌈 CÓDIGOS DE COLOR                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Método HTTP      Color       Uso
+  ───────────────────────────────────────────────────────
+  🟢 GET          Verde       Obtener información
+  🔵 POST         Azul        Crear nuevos registros
+  🟠 PUT          Naranja     Actualizar completo
+  🟣 PATCH        Morado      Actualizar parcial
+  🔴 DELETE       Rojo        Eliminar registros
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🌐 URLs IMPORTANTES                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  🏠 Página de Inicio
+     http://127.0.0.1:8000/
+
+  📋 Menú de APIs (¡NUEVO!)
+     http://127.0.0.1:8000/api/menu/
+
+  🔐 Login REST Framework
+     http://127.0.0.1:8000/api-auth/login/
+
+  ⚙️ Panel Admin Django
+     http://127.0.0.1:8000/admin/
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📚 DOCUMENTACIÓN DISPONIBLE                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  📄 MENU_API_INSTRUCCIONES.md
+     → Documentación completa del menú
+
+  📄 ACCESO_RAPIDO.md
+     → Guía rápida de acceso
+
+  📄 MENU_VISUAL_RESUMEN.md
+     → Resumen visual con diagramas
+
+  📄 RESUMEN_MENU_APIS.md
+     → Resumen técnico completo
+
+  📄 INICIO_RAPIDO.txt
+     → Instrucciones paso a paso
+
+  📄 LEEME_MENU_APIs.txt
+     → Este archivo
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🔐 AUTENTICACIÓN                                                       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Para usar las APIs protegidas:
+
+  1. Inicia sesión primero:
+     http://127.0.0.1:8000/api-auth/login/
+
+  2. Tu sesión se guarda en el navegador
+
+  3. Ya puedes probar todas las APIs de Admin y Cliente
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  💡 VENTAJAS DEL MENÚ                                                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  ✅ Sin necesidad de recordar URLs complejas
+  ✅ Interfaz profesional y moderna
+  ✅ Organización clara por roles
+  ✅ Documentación visual integrada
+  ✅ Acceso con un solo clic
+  ✅ Funciona en cualquier dispositivo
+  ✅ Fácil de usar para desarrolladores y usuarios
+  ✅ Escalable para agregar más APIs
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🎯 CASOS DE USO                                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  👨‍💼 Administrador
+     "Necesito actualizar el estado de un pedido"
+     → Tab Admin → Pedidos → Actualizar Estado → Clic
+
+  👤 Cliente
+     "Quiero ver mi historial de pedidos"
+     → Tab Cliente → Mis Pedidos → Clic
+
+  🔧 Desarrollador
+     "Necesito probar el endpoint de crear producto"
+     → Tab Admin → Productos → Crear Producto → Clic
+
+  📱 Usuario Móvil
+     "Quiero recargar mi saldo desde el teléfono"
+     → Tab Cliente → Recargar Saldo → Clic
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📊 ESTADÍSTICAS                                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  📈 Total de APIs:          30 endpoints
+  🔐 APIs de Admin:          19 endpoints (63%)
+  👤 APIs de Cliente:         6 endpoints (20%)
+  🔑 APIs de Autenticación:   5 endpoints (17%)
+
+  📂 Total de Categorías:     9 categorías
+  🎨 Métodos HTTP:            5 tipos (GET, POST, PUT, PATCH, DELETE)
+  📱 Dispositivos Soportados: Desktop, Tablet, Mobile
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🛠️ ARCHIVOS MODIFICADOS                                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  ✅ core/templates/api_menu.html  (Creado - 25 KB)
+  ✅ core/templates/index.html     (Creado - 4.5 KB)
+  ✅ core/views.py                 (Modificado - +15 líneas)
+  ✅ core/urls.py                  (Modificado - +3 líneas)
+  ✅ burritos_project/urls.py      (Modificado - +2 líneas)
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🎉 ¡TODO LISTO!                                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  Tu menú visual de APIs está completamente funcional y listo para usar.
+
+  Solo inicia el servidor y accede a:
+  
+     http://127.0.0.1:8000/api/menu/
+
+  ¡Disfruta de tu nuevo sistema profesional de APIs! 🚀
+
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║                   Creado con ❤️ por GitHub Copilot                       ║
+║                          Fecha: 03/11/2025                                ║
+║                              Versión: 1.0                                 ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burritos To Go - API Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .auth-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .auth-status a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 15px;
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tab-button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .api-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .api-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .api-card h3 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .api-card .method {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .method.get { background: #4caf50; }
+        .method.post { background: #2196f3; }
+        .method.put { background: #ff9800; }
+        .method.patch { background: #9c27b0; }
+        .method.delete { background: #f44336; }
+
+        .api-card .endpoint {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9em;
+            word-break: break-all;
+            color: #333;
+        }
+
+        .api-card .description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .api-card button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .api-card button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .auth-note {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .auth-note h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .auth-note p {
+            color: #856404;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .api-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header" style="position: relative;">
+            <div class="auth-status" id="authStatus">
+                <a href="/login/" id="authLink">🔐 Iniciar Sesión</a>
+                <div class="user-info" id="userInfo" style="display: none;"></div>
+            </div>
+            <h1>🌯 Burritos To Go</h1>
+            <p>Panel de Gestión de APIs</p>
+        </div>
+
+        <div class="content">
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('admin')">🔐 APIs de Administrador</button>
+                <button class="tab-button" onclick="switchTab('cliente')">👤 APIs de Cliente</button>
+                <button class="tab-button" onclick="switchTab('auth')">🔑 Autenticación</button>
+            </div>
+
+            <!-- Tab de Admin -->
+            <div id="admin" class="tab-content active">
+                <div class="auth-note">
+                    <h4>⚠️ Autenticación Requerida</h4>
+                    <p>Estas APIs requieren autenticación de administrador. Debes iniciar sesión con credenciales de administrador.</p>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">🖥️ Paneles Web de Administración</h2>
+                    <div class="api-grid">
+                        <div class="api-card" style="border-left-color: #dc3545;">
+                            <h3>⚙️ Panel Admin Django</h3>
+                            <span class="method get" style="background: #dc3545;">ADMIN</span>
+                            <div class="endpoint">/admin/</div>
+                            <p class="description">Panel de administración completo de Django con gestión total del sistema.</p>
+                            <button onclick="openAPI('/admin/', 'GET')">Ir al Admin Django</button>
+                        </div>
+
+                        <div class="api-card" style="border-left-color: #dc3545;">
+                            <h3>📊 Dashboard Admin</h3>
+                            <span class="method get" style="background: #dc3545;">ADMIN</span>
+                            <div class="endpoint">/api/admin-panel/</div>
+                            <p class="description">Panel personalizado con estadísticas, gráficas y resumen del negocio.</p>
+                            <button onclick="openAPI('/api/admin-panel/', 'GET')">Ver Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">Gestión de Productos</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Listar Productos</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/productos/</div>
+                            <p class="description">Obtiene la lista completa de productos disponibles con todos sus detalles.</p>
+                            <button onclick="openAPI('/api/productos/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Crear Producto</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/productos/</div>
+                            <p class="description">Crea un nuevo producto en el sistema con nombre, precio, categoría y disponibilidad.</p>
+                            <button onclick="openAPI('/api/productos/', 'POST')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Ver Producto</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/productos/{id}/</div>
+                            <p class="description">Obtiene los detalles específicos de un producto por su ID.</p>
+                            <button onclick="openAPI('/api/productos/1/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Actualizar Producto</h3>
+                            <span class="method put">PUT</span>
+                            <div class="endpoint">/api/productos/{id}/</div>
+                            <p class="description">Actualiza completamente la información de un producto existente.</p>
+                            <button onclick="openAPI('/api/productos/1/', 'PUT')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Actualizar Parcial</h3>
+                            <span class="method patch">PATCH</span>
+                            <div class="endpoint">/api/productos/{id}/</div>
+                            <p class="description">Actualiza parcialmente uno o más campos de un producto.</p>
+                            <button onclick="openAPI('/api/productos/1/', 'PATCH')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Eliminar Producto</h3>
+                            <span class="method delete">DELETE</span>
+                            <div class="endpoint">/api/productos/{id}/</div>
+                            <p class="description">Elimina un producto del sistema de forma permanente.</p>
+                            <button onclick="openAPI('/api/productos/1/', 'DELETE')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">Gestión de Categorías</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Listar Categorías</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/categorias/</div>
+                            <p class="description">Obtiene todas las categorías de productos disponibles.</p>
+                            <button onclick="openAPI('/api/categorias/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Crear Categoría</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/categorias/</div>
+                            <p class="description">Crea una nueva categoría para clasificar productos.</p>
+                            <button onclick="openAPI('/api/categorias/', 'POST')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Ver Categoría</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/categorias/{id}/</div>
+                            <p class="description">Obtiene los detalles de una categoría específica.</p>
+                            <button onclick="openAPI('/api/categorias/1/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Actualizar Categoría</h3>
+                            <span class="method put">PUT</span>
+                            <div class="endpoint">/api/categorias/{id}/</div>
+                            <p class="description">Actualiza la información de una categoría existente.</p>
+                            <button onclick="openAPI('/api/categorias/1/', 'PUT')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Eliminar Categoría</h3>
+                            <span class="method delete">DELETE</span>
+                            <div class="endpoint">/api/categorias/{id}/</div>
+                            <p class="description">Elimina una categoría del sistema.</p>
+                            <button onclick="openAPI('/api/categorias/1/', 'DELETE')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">Gestión de Pedidos</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Listar Pedidos</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/pedidos/</div>
+                            <p class="description">Obtiene todos los pedidos del sistema con filtros opcionales.</p>
+                            <button onclick="openAPI('/api/pedidos/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Ver Pedido</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/pedidos/{id}/</div>
+                            <p class="description">Obtiene los detalles completos de un pedido específico.</p>
+                            <button onclick="openAPI('/api/pedidos/1/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Actualizar Estado</h3>
+                            <span class="method patch">PATCH</span>
+                            <div class="endpoint">/api/pedidos/{id}/</div>
+                            <p class="description">Actualiza el estado de un pedido (pendiente, preparando, listo, entregado).</p>
+                            <button onclick="openAPI('/api/pedidos/1/', 'PATCH')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Cancelar Pedido</h3>
+                            <span class="method delete">DELETE</span>
+                            <div class="endpoint">/api/pedidos/{id}/</div>
+                            <p class="description">Cancela un pedido y reembolsa el saldo al cliente.</p>
+                            <button onclick="openAPI('/api/pedidos/1/', 'DELETE')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">Gestión de Usuarios</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Listar Usuarios</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/usuarios/</div>
+                            <p class="description">Obtiene la lista de todos los usuarios registrados en el sistema.</p>
+                            <button onclick="openAPI('/api/usuarios/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Ver Usuario</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/usuarios/{id}/</div>
+                            <p class="description">Obtiene los detalles de un usuario específico.</p>
+                            <button onclick="openAPI('/api/usuarios/1/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Actualizar Usuario</h3>
+                            <span class="method put">PUT</span>
+                            <div class="endpoint">/api/usuarios/{id}/</div>
+                            <p class="description">Actualiza la información de un usuario existente.</p>
+                            <button onclick="openAPI('/api/usuarios/1/', 'PUT')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Eliminar Usuario</h3>
+                            <span class="method delete">DELETE</span>
+                            <div class="endpoint">/api/usuarios/{id}/</div>
+                            <p class="description">Elimina un usuario del sistema.</p>
+                            <button onclick="openAPI('/api/usuarios/1/', 'DELETE')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab de Cliente -->
+            <div id="cliente" class="tab-content">
+                <div class="auth-note">
+                    <h4>⚠️ Autenticación Requerida</h4>
+                    <p>Estas APIs requieren que el usuario esté autenticado. Primero debes iniciar sesión.</p>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">🖥️ Paneles Web Interactivos</h2>
+                    <div class="api-grid">
+                        <div class="api-card" style="border-left-color: #28a745;">
+                            <h3>📋 Panel Principal</h3>
+                            <span class="method get" style="background: #28a745;">WEB</span>
+                            <div class="endpoint">/api/panel/</div>
+                            <p class="description">Panel principal del cliente con resumen de pedidos, saldo y accesos rápidos.</p>
+                            <button onclick="openAPI('/api/panel/', 'GET')">Ir al Panel</button>
+                        </div>
+
+                        <div class="api-card" style="border-left-color: #28a745;">
+                            <h3>🌯 Ver Menú Web</h3>
+                            <span class="method get" style="background: #28a745;">WEB</span>
+                            <div class="endpoint">/api/panel/menu/</div>
+                            <p class="description">Vista web del menú completo con imágenes y descripción de productos.</p>
+                            <button onclick="openAPI('/api/panel/menu/', 'GET')">Ver Menú Web</button>
+                        </div>
+
+                        <div class="api-card" style="border-left-color: #28a745;">
+                            <h3>🛒 Hacer Pedido</h3>
+                            <span class="method get" style="background: #28a745;">WEB</span>
+                            <div class="endpoint">/api/panel/hacer-pedido/</div>
+                            <p class="description">Interfaz web para crear pedidos fácilmente. Selecciona productos y confirma.</p>
+                            <button onclick="openAPI('/api/panel/hacer-pedido/', 'GET')">Hacer Pedido</button>
+                        </div>
+
+                        <div class="api-card" style="border-left-color: #28a745;">
+                            <h3>📦 Mis Pedidos Web</h3>
+                            <span class="method get" style="background: #28a745;">WEB</span>
+                            <div class="endpoint">/api/panel/mis-pedidos/</div>
+                            <p class="description">Vista web de todos tus pedidos con estado, fecha y detalles completos.</p>
+                            <button onclick="openAPI('/api/panel/mis-pedidos/', 'GET')">Ver Mis Pedidos</button>
+                        </div>
+
+                        <div class="api-card" style="border-left-color: #28a745;">
+                            <h3>💰 Recargar Saldo Web</h3>
+                            <span class="method get" style="background: #28a745;">WEB</span>
+                            <div class="endpoint">/api/panel/recargar-saldo/</div>
+                            <p class="description">Interfaz web para recargar tu saldo de forma sencilla y segura.</p>
+                            <button onclick="openAPI('/api/panel/recargar-saldo/', 'GET')">Recargar Saldo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">🔌 APIs JSON (para desarrolladores)</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Ver Menú</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/cliente/menu/</div>
+                            <p class="description">Obtiene el menú completo de productos disponibles para ordenar en formato JSON.</p>
+                            <button onclick="openAPI('/api/cliente/menu/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Mis Pedidos</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/cliente/mis-pedidos/</div>
+                            <p class="description">Consulta el historial completo de pedidos realizados por el cliente en JSON.</p>
+                            <button onclick="openAPI('/api/cliente/mis-pedidos/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Mi Saldo</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/cliente/mi-saldo/</div>
+                            <p class="description">Consulta el saldo disponible de la cuenta del cliente en JSON.</p>
+                            <button onclick="openAPI('/api/cliente/mi-saldo/', 'GET')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Mi Perfil</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/auth/mi-perfil/</div>
+                            <p class="description">Obtiene la información completa del perfil del usuario autenticado en JSON.</p>
+                            <button onclick="openAPI('/api/auth/mi-perfil/', 'GET')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">⚡ Acciones de Cliente (APIs JSON)</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Crear Pedido</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/crear_pedido/</div>
+                            <p class="description">Crea un nuevo pedido con los productos seleccionados. Descuenta el saldo automáticamente.</p>
+                            <button onclick="openAPI('/api/crear_pedido/', 'POST')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Recargar Saldo</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/cliente/recargar-saldo/</div>
+                            <p class="description">Recarga el saldo de la cuenta del cliente con el monto especificado en JSON.</p>
+                            <button onclick="openAPI('/api/cliente/recargar-saldo/', 'POST')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab de Autenticación -->
+            <div id="auth" class="tab-content">
+                <div class="category-section">
+                    <h2 class="section-title">APIs de Autenticación</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Registro</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/auth/register/</div>
+                            <p class="description">Registra un nuevo usuario en el sistema. Requiere username, email y password.</p>
+                            <button onclick="openAPI('/api/auth/register/', 'POST')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Iniciar Sesión</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/auth/login/</div>
+                            <p class="description">Autentica al usuario y devuelve un token de sesión. Usa username y password.</p>
+                            <button onclick="openAPI('/api/auth/login/', 'POST')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Cerrar Sesión</h3>
+                            <span class="method post">POST</span>
+                            <div class="endpoint">/api/auth/logout/</div>
+                            <p class="description">Cierra la sesión del usuario actual y elimina el token de autenticación.</p>
+                            <button onclick="openAPI('/api/auth/logout/', 'POST')">Probar API</button>
+                        </div>
+
+                        <div class="api-card">
+                            <h3>Mi Perfil</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api/auth/mi-perfil/</div>
+                            <p class="description">Obtiene los datos del usuario autenticado incluyendo saldo y pedidos.</p>
+                            <button onclick="openAPI('/api/auth/mi-perfil/', 'GET')">Probar API</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-section">
+                    <h2 class="section-title">Panel Web de Autenticación</h2>
+                    <div class="api-grid">
+                        <div class="api-card">
+                            <h3>Login Django REST</h3>
+                            <span class="method get">GET</span>
+                            <div class="endpoint">/api-auth/login/</div>
+                            <p class="description">Página de inicio de sesión de Django REST Framework para navegador.</p>
+                            <button onclick="openAPI('/api-auth/login/', 'GET')">Ir al Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar estado de autenticación
+        function checkAuth() {
+            const usuario = localStorage.getItem('usuario');
+            const authLink = document.getElementById('authLink');
+            const userInfo = document.getElementById('userInfo');
+            
+            if (usuario) {
+                try {
+                    const user = JSON.parse(usuario);
+                    authLink.textContent = '👤 ' + user.username;
+                    authLink.href = '#';
+                    userInfo.style.display = 'block';
+                    userInfo.innerHTML = `
+                        <div><strong>Rol:</strong> ${user.rol}</div>
+                        <div><strong>Saldo:</strong> $${user.saldo}</div>
+                        <a href="#" onclick="logout()" style="color: white; text-decoration: underline;">Cerrar Sesión</a>
+                    `;
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('token');
+            
+            // Llamar a la API de logout
+            fetch('/api/auth/logout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(() => {
+                window.location.reload();
+            });
+            
+            return false;
+        }
+        
+        function switchTab(tabName) {
+            // Ocultar todos los contenidos
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Desactivar todos los botones
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Activar el tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function openAPI(endpoint, method) {
+            const baseUrl = window.location.origin;
+            const fullUrl = baseUrl + endpoint;
+            
+            // Abrir en nueva pestaña
+            window.open(fullUrl, '_blank');
+        }
+        
+        // Verificar autenticación al cargar la página
+        window.onload = function() {
+            checkAuth();
+        };
+    </script>
+</body>
+</html>

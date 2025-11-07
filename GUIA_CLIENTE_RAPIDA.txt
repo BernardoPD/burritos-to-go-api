@@ -1,0 +1,283 @@
+╔═══════════════════════════════════════════════════════════════╗
+║         🌯 GUÍA RÁPIDA PARA CLIENTES - BURRITOS TO GO        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🔐 PASO 1: INICIAR SESIÓN                                  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Abre tu navegador en:
+   http://127.0.0.1:8000/login/
+
+2. Usa estas credenciales:
+   👤 Usuario: cliente1
+   🔑 Password: password123
+
+3. Clic en "Iniciar Sesión"
+
+4. ✅ Serás redirigido automáticamente al menú de APIs
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📋 PASO 2: ACCEDER AL MENÚ                                 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Después del login, verás el menú en:
+http://127.0.0.1:8000/api/menu/
+
+Esquina superior derecha mostrará:
+👤 cliente1
+Rol: cliente
+Saldo: $500.00
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🎯 PASO 3: USAR EL TAB "APIs de Cliente"                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Haz clic en la pestaña:
+👤 APIs de Cliente
+
+Verás la sección: 🖥️ Paneles Web Interactivos
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🛒 HACER UN PEDIDO                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. En el menú, busca la tarjeta:
+   🛒 Hacer Pedido
+   [WEB] /api/panel/hacer-pedido/
+
+2. Clic en "Hacer Pedido"
+
+3. Se abrirá la interfaz web
+
+4. Selecciona los productos que deseas
+
+5. Agrega al carrito
+
+6. Revisa el total
+
+7. Confirma el pedido
+
+8. ✅ Tu saldo se descuenta automáticamente
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📦 VER MIS PEDIDOS                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. En el menú, busca la tarjeta:
+   📦 Mis Pedidos Web
+   [WEB] /api/panel/mis-pedidos/
+
+2. Clic en "Ver Mis Pedidos"
+
+3. Verás tu historial completo de pedidos
+
+4. Estados de cada pedido:
+   🟡 Pendiente - Tu pedido está en cola
+   🔵 Preparando - Se está preparando
+   🟢 Listo - Puedes recoger tu orden
+   ✅ Entregado - Pedido completado
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  💰 RECARGAR SALDO                                           ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. En el menú, busca la tarjeta:
+   💰 Recargar Saldo Web
+   [WEB] /api/panel/recargar-saldo/
+
+2. Clic en "Recargar Saldo"
+
+3. Ingresa el monto que deseas agregar
+
+4. Confirma la recarga
+
+5. ✅ Tu saldo se actualiza inmediatamente
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🌯 VER MENÚ DE PRODUCTOS                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. En el menú, busca la tarjeta:
+   🌯 Ver Menú Web
+   [WEB] /api/panel/menu/
+
+2. Clic en "Ver Menú Web"
+
+3. Explora todos los productos disponibles
+
+4. Ve precios, descripciones y categorías
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📊 PANEL PRINCIPAL                                          ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. En el menú, busca la tarjeta:
+   📋 Panel Principal
+   [WEB] /api/panel/
+
+2. Clic en "Ir al Panel"
+
+3. Verás tu dashboard personal con:
+   - Resumen de pedidos recientes
+   - Saldo actual
+   - Accesos rápidos a todas las funciones
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🔄 CERRAR SESIÓN                                            ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Desde cualquier página con el menú de APIs:
+
+1. Busca en la esquina superior derecha
+
+2. Verás tu nombre de usuario
+
+3. Clic en "Cerrar Sesión"
+
+4. ✅ Tu sesión se cerrará y volverás al login
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  💡 TIPS ÚTILES                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+✅ Tu saldo actual siempre está visible en el menú
+
+✅ Los paneles web (badge verde "WEB") son más fáciles de usar
+
+✅ Las APIs JSON son para desarrolladores/apps móviles
+
+✅ Puedes hacer múltiples pedidos
+
+✅ Tu historial de pedidos se guarda automáticamente
+
+✅ El saldo se descuenta automáticamente al confirmar pedido
+
+✅ Solo puedes hacer pedidos si tienes saldo suficiente
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🎯 FLUJO COMPLETO: HACER TU PRIMER PEDIDO                   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+1. Login → http://127.0.0.1:8000/login/
+   Usuario: cliente1
+   Password: password123
+   ↓
+
+2. Menú de APIs → Tab "APIs de Cliente"
+   ↓
+
+3. Clic en "🛒 Hacer Pedido"
+   ↓
+
+4. Selecciona productos
+   (Ejemplo: 2 Burritos de Carne, 1 Refresco)
+   ↓
+
+5. Revisa total
+   (Total: $210.00, Tu saldo: $500.00)
+   ↓
+
+6. Confirma pedido
+   ↓
+
+7. ✅ Pedido creado!
+   Nuevo saldo: $290.00
+   ↓
+
+8. Ver pedido → Clic en "📦 Mis Pedidos Web"
+   ↓
+
+9. Ver estado: 🟡 Pendiente
+   ↓
+
+10. Espera a que el admin cambie estado
+    🟡 Pendiente → 🔵 Preparando → 🟢 Listo → ✅ Entregado
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  🆘 SOLUCIÓN DE PROBLEMAS                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+❌ "No puedo iniciar sesión"
+   → Verifica usuario: cliente1
+   → Verifica password: password123
+   → Asegúrate que el servidor esté corriendo
+
+❌ "No tengo saldo suficiente"
+   → Ve a "💰 Recargar Saldo Web"
+   → Agrega el monto necesario
+
+❌ "No veo mis pedidos"
+   → Asegúrate de estar autenticado
+   → Revisa que estés usando "cliente1"
+
+❌ "La página no carga"
+   → Verifica que el servidor esté corriendo
+   → URL correcta: http://127.0.0.1:8000/
+
+❌ "Olvidé mi contraseña"
+   → Contacta al administrador
+   → O usa otro usuario de prueba
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  📱 ACCESOS DIRECTOS                                         ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Guarda estos links en tus favoritos:
+
+🏠 Inicio:
+   http://127.0.0.1:8000/
+
+🔐 Login:
+   http://127.0.0.1:8000/login/
+
+📋 Menú APIs:
+   http://127.0.0.1:8000/api/menu/
+
+📊 Panel Cliente:
+   http://127.0.0.1:8000/api/panel/
+
+🛒 Hacer Pedido:
+   http://127.0.0.1:8000/api/panel/hacer-pedido/
+
+📦 Mis Pedidos:
+   http://127.0.0.1:8000/api/panel/mis-pedidos/
+
+💰 Recargar Saldo:
+   http://127.0.0.1:8000/api/panel/recargar-saldo/
+
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  👥 OTROS USUARIOS DE PRUEBA                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+Cliente 1:
+Usuario: cliente1
+Password: password123
+Saldo: $500.00
+
+Cliente 2:
+Usuario: cliente2
+Password: password123
+Saldo: $300.00
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║                  🎉 ¡DISFRUTA TUS BURRITOS! 🌯               ║
+║                                                               ║
+║  Sistema completo y funcionando al 100%                      ║
+║  Acceso fácil desde el menú visual de APIs                   ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
