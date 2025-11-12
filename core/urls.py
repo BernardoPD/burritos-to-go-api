@@ -54,6 +54,8 @@ urlpatterns = [
     # ==================== RUTAS API PARA CLIENTES ====================
     # Consultar menú
     path('cliente/menu/', MenuView.as_view(), name='cliente-menu'),
+    # Crear pedido (POST)
+    path('cliente/crear-pedido/', CrearPedidoView.as_view(), name='cliente-crear-pedido'),
     # Consultar pedidos (actuales y pasados)
     path('cliente/mis-pedidos/', MisPedidosView.as_view(), name='cliente-mis-pedidos'),
     # Consultar saldo

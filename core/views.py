@@ -166,6 +166,8 @@ class LoginView(APIView):
         login(request, user)
         
         return Response({
+            'success': True,
+            'code': 200,
             'mensaje': 'Login exitoso',
             'token': token.key,
             'usuario': {
@@ -213,6 +215,8 @@ class RegisterView(APIView):
         login(request, user)
         
         return Response({
+            'success': True,
+            'code': 200,
             'mensaje': 'Usuario registrado exitosamente',
             'token': token.key,
             'usuario': {

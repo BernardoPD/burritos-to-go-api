@@ -4,9 +4,20 @@ from decimal import Decimal
 from django.contrib.auth import authenticate
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    rol_id = serializers.SerializerMethodField()
+    
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'rol', 'saldo']
+        fields = ['id', 'username', 'email', 'rol', 'rol_id', 'saldo']
+    
+    def get_rol_id(self, obj):
+        """Retorna un ID numérico según el rol del usuario"""
+        roles_map = {
+            'admin': 1,
+            'cliente': 2,
+            'staff': 3
+        }
+        return roles_map.get(obj.rol, 2)
 
 # ==================== SERIALIZADORES DE AUTENTICACIÓN ====================
 
@@ -83,10 +94,11 @@ class PerfilSerializer(serializers.ModelSerializer):
 class ProductoSerializer(serializers.ModelSerializer):
     """Serializer para mostrar productos con información de categoría"""
     categoria_nombre = serializers.CharField(source='categoria.nombre', read_only=True)
+    categoria_id = serializers.IntegerField(source='categoria.id', read_only=True)
     
     class Meta:
         model = Producto
-        fields = ['id', 'nombre', 'descripcion', 'precio', 'categoria', 'categoria_nombre', 'activo']
+        fields = ['id', 'nombre', 'descripcion', 'precio', 'categoria', 'categoria_id', 'categoria_nombre', 'activo']
 
 class ProductoMenuSerializer(serializers.ModelSerializer):
     """
