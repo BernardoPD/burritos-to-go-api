@@ -96,17 +96,26 @@ class CrearPedidoView(APIView):
         productos = Producto.objects.filter(id__in=productos_ids, activo=True)
 
         if not productos.exists():
-            return Response({'error': 'No se encontraron productos válidos.'}, status=400)
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': None,
+                'message': 'No se encontraron productos válidos.'
+            }, status=400)
 
         total = sum([p.precio for p in productos])
         cliente = request.user
 
         if cliente.saldo < total:
             return Response({
-                'error': 'Saldo insuficiente.',
-                'saldo_actual': cliente.saldo,
-                'total_pedido': total,
-                'faltante': round(total - cliente.saldo, 2)
+                'success': False,
+                'code': 400,
+                'data': {
+                    'saldo_actual': float(cliente.saldo),
+                    'total_pedido': float(total),
+                    'faltante': float(total - cliente.saldo)
+                },
+                'message': 'Saldo insuficiente.'
             }, status=400)
 
         pedido = Pedido.objects.create(
@@ -120,12 +129,16 @@ class CrearPedidoView(APIView):
         cliente.save()
 
         return Response({
-            'mensaje': 'Pedido creado exitosamente.',
-            'pedido_id': pedido.id,
-            'total': total,
-            'productos': [p.nombre for p in productos],
-            'fecha': pedido.fecha,
-            'saldo_restante': cliente.saldo
+            'success': True,
+            'code': 200,
+            'data': {
+                'pedido_id': pedido.id,
+                'total': float(total),
+                'productos': [p.nombre for p in productos],
+                'fecha': pedido.fecha,
+                'saldo_restante': float(cliente.saldo)
+            },
+            'message': 'Pedido creado exitosamente.'
         })
 
 # ==================== VISTAS DE AUTENTICACIÓN ====================
@@ -153,8 +166,10 @@ class LoginView(APIView):
         
         if not serializer.is_valid():
             return Response({
-                'error': 'Datos inválidos',
-                'detalles': serializer.errors
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
             }, status=status.HTTP_400_BAD_REQUEST)
         
         user = serializer.validated_data['user']
@@ -168,15 +183,17 @@ class LoginView(APIView):
         return Response({
             'success': True,
             'code': 200,
-            'mensaje': 'Login exitoso',
-            'token': token.key,
-            'usuario': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'rol': user.rol,
-                'saldo': float(user.saldo)
-            }
+            'data': {
+                'token': token.key,
+                'usuario': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'rol': user.rol,
+                    'saldo': float(user.saldo)
+                }
+            },
+            'message': 'Login exitoso'
         }, status=status.HTTP_200_OK)
 
 class RegisterView(APIView):
@@ -202,8 +219,10 @@ class RegisterView(APIView):
         
         if not serializer.is_valid():
             return Response({
-                'error': 'Datos inválidos',
-                'detalles': serializer.errors
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
             }, status=status.HTTP_400_BAD_REQUEST)
         
         user = serializer.save()
@@ -216,16 +235,18 @@ class RegisterView(APIView):
         
         return Response({
             'success': True,
-            'code': 200,
-            'mensaje': 'Usuario registrado exitosamente',
-            'token': token.key,
-            'usuario': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'rol': user.rol,
-                'saldo': float(user.saldo)
-            }
+            'code': 201,
+            'data': {
+                'token': token.key,
+                'usuario': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'rol': user.rol,
+                    'saldo': float(user.saldo)
+                }
+            },
+            'message': 'Usuario registrado exitosamente'
         }, status=status.HTTP_201_CREATED)
 
 class LogoutView(APIView):
@@ -249,7 +270,10 @@ class LogoutView(APIView):
         logout(request)
         
         return Response({
-            'mensaje': 'Sesión cerrada exitosamente'
+            'success': True,
+            'code': 200,
+            'data': None,
+            'message': 'Sesión cerrada exitosamente'
         }, status=status.HTTP_200_OK)
 
 class MiPerfilView(APIView):
@@ -264,7 +288,12 @@ class MiPerfilView(APIView):
     
     def get(self, request):
         serializer = PerfilSerializer(request.user)
-        return Response(serializer.data)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Perfil obtenido exitosamente'
+        })
 
 # ==================== VISTAS PARA CLIENTES ====================
 
@@ -277,21 +306,13 @@ class MenuView(APIView):
     
     Respuesta:
     {
-        "categorias": [
-            {
-                "id": 1,
-                "nombre": "Burritos",
-                "productos": [
-                    {
-                        "id": 1,
-                        "nombre": "Burrito de Carne",
-                        "descripcion": "...",
-                        "precio": "80.00",
-                        "categoria_nombre": "Burritos"
-                    }
-                ]
-            }
-        ]
+        "success": true,
+        "code": 200,
+        "data": {
+            "categorias": [...],
+            "total_categorias": 5
+        },
+        "message": "Menú obtenido exitosamente"
     }
     """
     def get(self, request):
@@ -300,8 +321,13 @@ class MenuView(APIView):
         serializer = CategoriaConProductosSerializer(categorias, many=True)
         
         return Response({
-            'categorias': serializer.data,
-            'total_categorias': categorias.count()
+            'success': True,
+            'code': 200,
+            'data': {
+                'categorias': serializer.data,
+                'total_categorias': categorias.count()
+            },
+            'message': 'Menú obtenido exitosamente'
         })
 
 class MisPedidosView(APIView):
@@ -344,12 +370,17 @@ class MisPedidosView(APIView):
         serializer = PedidoDetalleSerializer(pedidos, many=True)
         
         return Response({
-            'pedidos': serializer.data,
-            'total': pedidos.count(),
-            'filtros_aplicados': {
-                'tipo': tipo,
-                'estatus': estatus
-            }
+            'success': True,
+            'code': 200,
+            'data': {
+                'pedidos': serializer.data,
+                'total': pedidos.count(),
+                'filtros_aplicados': {
+                    'tipo': tipo,
+                    'estatus': estatus
+                }
+            },
+            'message': 'Pedidos obtenidos exitosamente'
         })
 
 class MiSaldoView(APIView):
@@ -360,9 +391,15 @@ class MiSaldoView(APIView):
     
     Respuesta:
     {
-        "saldo": "500.00",
-        "usuario": "juan",
-        "fecha_consulta": "2025-10-26T18:30:00"
+        "success": true,
+        "code": 200,
+        "data": {
+            "saldo": 500.00,
+            "usuario": "juan",
+            "email": "juan@example.com",
+            "fecha_consulta": "2025-10-26T18:30:00"
+        },
+        "message": "Saldo obtenido exitosamente"
     }
     """
     permission_classes = [IsAuthenticated]
@@ -371,10 +408,15 @@ class MiSaldoView(APIView):
         cliente = request.user
         
         return Response({
-            'saldo': float(cliente.saldo),
-            'usuario': cliente.username,
-            'email': cliente.email,
-            'fecha_consulta': timezone.now()
+            'success': True,
+            'code': 200,
+            'data': {
+                'saldo': float(cliente.saldo),
+                'usuario': cliente.username,
+                'email': cliente.email,
+                'fecha_consulta': timezone.now()
+            },
+            'message': 'Saldo obtenido exitosamente'
         })
 
 class RecargarSaldoView(APIView):
@@ -400,8 +442,10 @@ class RecargarSaldoView(APIView):
         # Validar datos
         if not serializer.is_valid():
             return Response({
-                'error': 'Datos inválidos',
-                'detalles': serializer.errors
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
             }, status=status.HTTP_400_BAD_REQUEST)
         
         monto = serializer.validated_data['monto']
@@ -413,12 +457,16 @@ class RecargarSaldoView(APIView):
         cliente.save()
         
         return Response({
-            'mensaje': 'Saldo recargado exitosamente',
-            'monto_recargado': float(monto),
-            'saldo_anterior': float(saldo_anterior),
-            'saldo_actual': float(cliente.saldo),
-            'usuario': cliente.username,
-            'fecha_recarga': timezone.now()
+            'success': True,
+            'code': 200,
+            'data': {
+                'monto_recargado': float(monto),
+                'saldo_anterior': float(saldo_anterior),
+                'saldo_actual': float(cliente.saldo),
+                'usuario': cliente.username,
+                'fecha_recarga': timezone.now()
+            },
+            'message': 'Saldo recargado exitosamente'
         }, status=status.HTTP_200_OK)
 
 # ==================== VISTAS WEB PARA PANEL DE CLIENTE ====================

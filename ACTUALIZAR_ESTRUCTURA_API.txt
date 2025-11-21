@@ -1,0 +1,94 @@
+================================================================================
+ACTUALIZACIÓN: ESTRUCTURA ESTANDARIZADA DE APIs
+================================================================================
+
+Fecha: 2025-11-21
+Cambio: Todas las APIs ahora devuelven: success, code, data, message
+
+================================================================================
+PASO 1: CONECTARSE A PYTHONANYWHERE
+================================================================================
+
+1. Ve a: https://www.pythonanywhere.com/user/pradodiazbackend/
+2. Click en "Consoles" → "Bash"
+3. Abre una nueva consola Bash
+
+================================================================================
+PASO 2: COPIAR Y PEGAR ESTOS COMANDOS
+================================================================================
+
+cd ~/burritos_to_go
+source venv/bin/activate
+git pull origin main
+python manage.py check
+python manage.py collectstatic --noinput
+touch /var/www/pradodiazbackend_pythonanywhere_com_wsgi.py
+
+================================================================================
+PASO 3: VERIFICAR QUE FUNCIONA
+================================================================================
+
+Abre en tu navegador:
+https://pradodiazbackend.pythonanywhere.com/api/cliente/menu/
+
+Debe mostrar:
+{
+    "success": true,
+    "code": 200,
+    "data": {
+        "categorias": [...],
+        "total_categorias": 5
+    },
+    "message": "Menú obtenido exitosamente"
+}
+
+================================================================================
+CAMBIOS REALIZADOS
+================================================================================
+
+✅ LoginView - Estructura estandarizada
+✅ RegisterView - Estructura estandarizada  
+✅ LogoutView - Estructura estandarizada
+✅ MiPerfilView - Estructura estandarizada
+✅ MenuView - Estructura estandarizada
+✅ MisPedidosView - Estructura estandarizada
+✅ MiSaldoView - Estructura estandarizada
+✅ RecargarSaldoView - Estructura estandarizada
+✅ CrearPedidoView - Estructura estandarizada
+
+================================================================================
+NUEVA ESTRUCTURA DE RESPUESTAS
+================================================================================
+
+ANTES:
+{
+    "categorias": [...],
+    "total_categorias": 5
+}
+
+AHORA:
+{
+    "success": true,
+    "code": 200,
+    "data": {
+        "categorias": [...],
+        "total_categorias": 5
+    },
+    "message": "Menú obtenido exitosamente"
+}
+
+================================================================================
+ENDPOINTS ACTUALIZADOS
+================================================================================
+
+POST /api/auth/login/
+POST /api/auth/register/
+POST /api/auth/logout/
+GET  /api/auth/mi-perfil/
+GET  /api/cliente/menu/
+GET  /api/cliente/mis-pedidos/
+GET  /api/cliente/mi-saldo/
+POST /api/cliente/recargar-saldo/
+POST /api/cliente/crear-pedido/
+
+================================================================================

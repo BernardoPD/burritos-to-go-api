@@ -1,0 +1,224 @@
+================================================================================
+COMANDOS PARA ACTUALIZAR PYTHONANYWHERE - CAMBIOS FLUTTER
+================================================================================
+
+Usuario: pradodiazbackend
+URL: https://pradodiazbackend.pythonanywhere.com
+
+================================================================================
+PASO 1: CONECTARSE A PYTHONANYWHERE BASH CONSOLE
+================================================================================
+
+Ve a: https://www.pythonanywhere.com/user/pradodiazbackend/consoles/
+Click en "Bash" para abrir una nueva consola
+
+================================================================================
+PASO 2: NAVEGAR AL PROYECTO Y ACTIVAR VIRTUALENV
+================================================================================
+
+cd ~/burritos_to_go
+source venv/bin/activate
+
+================================================================================
+PASO 3: HACER BACKUP (OPCIONAL PERO RECOMENDADO)
+================================================================================
+
+# Hacer backup de archivos importantes
+cp core/serializers.py core/serializers.py.backup
+cp core/views.py core/views.py.backup
+cp core/urls.py core/urls.py.backup
+
+================================================================================
+PASO 4: ACTUALIZAR CÓDIGO DESDE GITHUB
+================================================================================
+
+git fetch origin
+git pull origin main
+
+# Deberías ver algo como:
+# remote: Enumerating objects...
+# From https://github.com/BernardoPD/burritos-to-go-api
+#    40c7824..4e752d5  main       -> origin/main
+# Updating 40c7824..4e752d5
+# Fast-forward
+#  API_FLUTTER_FINAL.md           | 559 ++++++++++++++++++++++
+#  CAMBIOS_APIS_FLUTTER.md        | 389 +++++++++++++++
+#  core/serializers.py            |  18 +-
+#  core/views.py                  |   4 +
+#  core/urls.py                   |   2 +
+#  ... más archivos
+
+================================================================================
+PASO 5: VERIFICAR LOS CAMBIOS
+================================================================================
+
+# Ver qué archivos cambiaron
+git log --oneline -1
+# Debe mostrar: feat: APIs listas para Flutter - agregados categoria_id, rol_id, success y code
+
+# Ver diferencias en serializers.py
+git diff HEAD~1 core/serializers.py | head -50
+
+================================================================================
+PASO 6: REINSTALAR DEPENDENCIAS (SI ES NECESARIO)
+================================================================================
+
+pip install -r requirements.txt
+
+================================================================================
+PASO 7: APLICAR MIGRACIONES (SI HAY ALGUNA)
+================================================================================
+
+python manage.py migrate
+
+# Debería mostrar: No migrations to apply.
+
+================================================================================
+PASO 8: RECOLECTAR ARCHIVOS ESTÁTICOS
+================================================================================
+
+python manage.py collectstatic --noinput
+
+================================================================================
+PASO 9: VERIFICAR QUE NO HAY ERRORES
+================================================================================
+
+python manage.py check
+
+# Debe mostrar: System check identified no issues (0 silenced).
+
+================================================================================
+PASO 10: RELOAD DE LA APLICACIÓN WEB
+================================================================================
+
+# Opción 1: Desde la consola
+touch /var/www/pradodiazbackend_pythonanywhere_com_wsgi.py
+
+# Opción 2: Desde el navegador (RECOMENDADO)
+# Ve a: https://www.pythonanywhere.com/user/pradodiazbackend/webapps/
+# Click en el botón verde "Reload pradodiazbackend.pythonanywhere.com"
+
+================================================================================
+PASO 11: PROBAR LOS CAMBIOS
+================================================================================
+
+# Probar en el navegador o con curl:
+
+# 1. Productos (debe tener categoria_id)
+curl https://pradodiazbackend.pythonanywhere.com/api/productos/
+
+# Debe mostrar:
+# {
+#     "id": 1,
+#     "categoria": 1,
+#     "categoria_id": 1,  ← NUEVO
+#     "categoria_nombre": "Burritos"
+# }
+
+# 2. Usuarios (debe tener rol_id)
+curl https://pradodiazbackend.pythonanywhere.com/api/usuarios/
+
+# Debe mostrar:
+# {
+#     "id": 1,
+#     "rol": "cliente",
+#     "rol_id": 2,  ← NUEVO
+# }
+
+# 3. Login (debe tener success y code)
+curl -X POST https://pradodiazbackend.pythonanywhere.com/api/auth/login/ \
+  -H "Content-Type: application/json" \
+  -d '{"username":"cliente1","password":"password123"}'
+
+# Debe mostrar:
+# {
+#     "success": true,  ← NUEVO
+#     "code": 200,      ← NUEVO
+#     "mensaje": "Login exitoso",
+#     "token": "...",
+#     "usuario": {...}
+# }
+
+================================================================================
+PASO 12: VERIFICAR EN EL NAVEGADOR
+================================================================================
+
+Abre estas URLs en tu navegador:
+
+1. https://pradodiazbackend.pythonanywhere.com/api/productos/
+   → Verifica que tenga "categoria_id"
+
+2. https://pradodiazbackend.pythonanywhere.com/api/usuarios/
+   → Verifica que tenga "rol_id"
+
+3. https://pradodiazbackend.pythonanywhere.com/api/menu/
+   → Verifica que el menú funcione
+
+================================================================================
+COMANDOS DE DIAGNÓSTICO (SI HAY PROBLEMAS)
+================================================================================
+
+# Ver logs de error
+tail -f /var/log/pradodiazbackend.pythonanywhere.com.error.log
+
+# Ver logs de acceso
+tail -f /var/log/pradodiazbackend.pythonanywhere.com.access.log
+
+# Verificar versión de Python
+python --version
+
+# Ver paquetes instalados
+pip list | grep -i django
+
+# Probar importación
+python -c "from core.serializers import ProductoSerializer; print('OK')"
+
+# Reiniciar desde cero (ÚLTIMO RECURSO)
+cd ~/burritos_to_go
+git reset --hard origin/main
+pip install -r requirements.txt --force-reinstall
+python manage.py migrate
+python manage.py collectstatic --noinput
+touch /var/www/pradodiazbackend_pythonanywhere_com_wsgi.py
+
+================================================================================
+RESUMEN DE CAMBIOS IMPLEMENTADOS
+================================================================================
+
+✅ ProductoSerializer - Agregado campo "categoria_id"
+✅ UsuarioSerializer - Agregado campo "rol_id" (1=admin, 2=cliente, 3=staff)
+✅ LoginView - Agregado "success": true y "code": 200
+✅ RegisterView - Agregado "success": true y "code": 200
+✅ Endpoint crear pedido - Documentado
+✅ Endpoint mis pedidos - Documentado
+✅ Endpoint mi saldo - Explicado autenticación por token
+
+================================================================================
+URLs DE PRODUCCIÓN ACTUALIZADAS
+================================================================================
+
+Base URL: https://pradodiazbackend.pythonanywhere.com/api/
+
+Endpoints principales:
+- POST   /auth/login/              (con success y code)
+- POST   /auth/register/           (con success y code)
+- GET    /productos/               (con categoria_id)
+- GET    /usuarios/                (con rol_id)
+- GET    /cliente/menu/
+- POST   /cliente/crear-pedido/
+- GET    /cliente/mis-pedidos/
+- GET    /cliente/mi-saldo/
+- POST   /cliente/recargar-saldo/
+
+================================================================================
+¡LISTO! La aplicación está actualizada en producción
+================================================================================
+
+Cambios subidos a GitHub: ✅
+Commit: 4e752d5
+Fecha: 2025-11-12
+
+Para probar desde Flutter, usa:
+https://pradodiazbackend.pythonanywhere.com/api/
+
+================================================================================

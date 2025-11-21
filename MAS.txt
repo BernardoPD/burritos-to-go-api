@@ -1,0 +1,33 @@
+Aqui si se despliega el nombre de la categoria y su id
+EN PRODUCTO LIST 
+
+
+
+Aqui hace falta el id del Rol de usuario EN USUARIO LIST
+
+
+register:
+En el caso de la respuesta del POST de registro de usuario, con que le agregues el success y el code queda bien:
+
+{
+    "success": true,
+    "code":200,
+    "mensaje": "Usuario registrado exitosamente",
+    "token": "5f2b3fdf4f1ff094c5d879945d588328192dfcac",
+    "usuario": {
+        "id": 6,
+        "username": "guiegar",
+        "email": "guiegar@gmail.com",
+        "rol": "cliente",
+        "saldo": 0.0
+    }
+}
+
+login:
+igual para la respuesta del Login de usuario, agregarle el atributo success y el code
+
+No encontré el endpoint para crear un pedido mediante POST o como usuario,
+consultar mis pedidos mediante un GET
+Tengo duda con respecto al endpoint para consultar saldo.
+Como hago el GET indicando de que cliente /usuario quiero consultar??? 
+Imagino a la mejor le debo pasar el Token del usuario que inició sesión??
