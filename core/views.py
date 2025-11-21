@@ -20,73 +20,358 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 class UsuarioViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestión de usuarios (Admin).
+    Estructura de respuesta estándar: {success, code, data, message}
+    """
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': {
+                'usuarios': serializer.data,
+                'total': queryset.count()
+            },
+            'message': 'Usuarios obtenidos exitosamente'
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Usuario obtenido exitosamente'
+        })
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_create(serializer)
+        return Response({
+            'success': True,
+            'code': 201,
+            'data': serializer.data,
+            'message': 'Usuario creado exitosamente'
+        }, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Usuario actualizado exitosamente'
+        })
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': None,
+            'message': 'Usuario eliminado exitosamente'
+        }, status=status.HTTP_200_OK)
 
 class ProductoViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestión de productos.
+    Estructura de respuesta estándar: {success, code, data, message}
+    """
     queryset = Producto.objects.filter(activo=True)
     serializer_class = ProductoSerializer
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': {
+                'productos': serializer.data,
+                'total': queryset.count()
+            },
+            'message': 'Productos obtenidos exitosamente'
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Producto obtenido exitosamente'
+        })
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_create(serializer)
+        return Response({
+            'success': True,
+            'code': 201,
+            'data': serializer.data,
+            'message': 'Producto creado exitosamente'
+        }, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Producto actualizado exitosamente'
+        })
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': None,
+            'message': 'Producto eliminado exitosamente'
+        }, status=status.HTTP_200_OK)
 
 class CategoriaViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestión de categorías.
+    Estructura de respuesta estándar: {success, code, data, message}
+    """
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': {
+                'categorias': serializer.data,
+                'total': queryset.count()
+            },
+            'message': 'Categorías obtenidas exitosamente'
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Categoría obtenida exitosamente'
+        })
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_create(serializer)
+        return Response({
+            'success': True,
+            'code': 201,
+            'data': serializer.data,
+            'message': 'Categoría creada exitosamente'
+        }, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Categoría actualizada exitosamente'
+        })
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': None,
+            'message': 'Categoría eliminada exitosamente'
+        }, status=status.HTTP_200_OK)
 
 class PedidoViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestión de pedidos.
+    Estructura de respuesta estándar: {success, code, data, message}
+    """
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
-
-    def perform_create(self, serializer):
-        """
-        PROBLEMA DETECTADO: No se descontaba el saldo del cliente al crear pedido
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': {
+                'pedidos': serializer.data,
+                'total': queryset.count()
+            },
+            'message': 'Pedidos obtenidos exitosamente'
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Pedido obtenido exitosamente'
+        })
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
         
-        CÓDIGO ANTERIOR:
-            serializer.save(cliente=self.request.user)
-            productos = serializer.validated_data.get('productos', [])
-            total = sum([p.precio for p in productos])
-            serializer.save(cliente=self.request.user, total=total)
-        
-        PROBLEMA: 
-            1. Se guardaba dos veces el pedido (doble llamada a serializer.save())
-            2. NO se validaba saldo suficiente del cliente
-            3. NO se descontaba el total del saldo del cliente
-            4. Inconsistencia con CrearPedidoView que SÍ descuenta saldo
-        
-        SOLUCIÓN IMPLEMENTADA:
-            1. Calcular total ANTES de guardar
-            2. Validar saldo suficiente del cliente
-            3. Guardar pedido UNA SOLA VEZ con todos los datos
-            4. Descontar total del saldo del cliente
-            5. Persistir cambios en el cliente con save()
-        
-        JUSTIFICACIÓN:
-            - Cumple regla de negocio: todo pedido debe descontar saldo
-            - Previene saldos negativos con validación previa
-            - Mantiene consistencia con CrearPedidoView
-            - Evita double-save que podría causar race conditions
-        """
-        # Obtener productos y calcular total del pedido
+        # Validar y descontar saldo
         productos = serializer.validated_data.get('productos', [])
+        if not productos:
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': None,
+                'message': 'No se encontraron productos válidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
         total = sum([p.precio for p in productos])
-        cliente = self.request.user
+        cliente = request.user
         
-        # ✅ Validar saldo suficiente ANTES de crear el pedido
         if cliente.saldo < total:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError({
-                'error': 'Saldo insuficiente.',
-                'saldo_actual': float(cliente.saldo),
-                'total_pedido': float(total),
-                'faltante': float(total - cliente.saldo)
-            })
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': {
+                    'saldo_actual': float(cliente.saldo),
+                    'total_pedido': float(total),
+                    'faltante': float(total - cliente.saldo)
+                },
+                'message': 'Saldo insuficiente'
+            }, status=status.HTTP_400_BAD_REQUEST)
         
-        # ✅ Guardar pedido con todos los datos (una sola vez)
+        # Crear pedido
         pedido = serializer.save(cliente=cliente, total=total)
-        
-        # ✅ Descontar total del saldo del cliente
         cliente.saldo -= total
         cliente.save()
         
-        # ✅ El saldo del cliente ahora refleja correctamente el pago del pedido
+        return Response({
+            'success': True,
+            'code': 201,
+            'data': {
+                'pedido_id': pedido.id,
+                'total': float(total),
+                'productos': [{'id': p.id, 'nombre': p.nombre, 'precio': float(p.precio)} for p in productos],
+                'saldo_restante': float(cliente.saldo)
+            },
+            'message': 'Pedido creado exitosamente'
+        }, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        
+        if not serializer.is_valid():
+            return Response({
+                'success': False,
+                'code': 400,
+                'data': serializer.errors,
+                'message': 'Datos inválidos'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': serializer.data,
+            'message': 'Pedido actualizado exitosamente'
+        })
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({
+            'success': True,
+            'code': 200,
+            'data': None,
+            'message': 'Pedido eliminado exitosamente'
+        }, status=status.HTTP_200_OK)
 
 class CrearPedidoView(APIView):
     permission_classes = [IsAuthenticated]
