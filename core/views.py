@@ -23,9 +23,11 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de usuarios (Admin).
     Estructura de respuesta estándar: {success, code, data, message}
+    Requiere autenticación para todos los métodos
     """
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    permission_classes = [IsAuthenticated]
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -103,9 +105,19 @@ class ProductoViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de productos.
     Estructura de respuesta estándar: {success, code, data, message}
+    GET/LIST públicos, POST/PUT/DELETE requieren autenticación
     """
     queryset = Producto.objects.filter(activo=True)
     serializer_class = ProductoSerializer
+    
+    def get_permissions(self):
+        """
+        GET y LIST son públicos (para mostrar menú)
+        POST, PUT, DELETE requieren autenticación
+        """
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny()]
+        return [IsAuthenticated()]
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -183,9 +195,19 @@ class CategoriaViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de categorías.
     Estructura de respuesta estándar: {success, code, data, message}
+    GET/LIST públicos, POST/PUT/DELETE requieren autenticación
     """
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
+    
+    def get_permissions(self):
+        """
+        GET y LIST son públicos (para mostrar menú)
+        POST, PUT, DELETE requieren autenticación
+        """
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny()]
+        return [IsAuthenticated()]
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -263,9 +285,11 @@ class PedidoViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gestión de pedidos.
     Estructura de respuesta estándar: {success, code, data, message}
+    Requiere autenticación para todos los métodos
     """
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
+    permission_classes = [IsAuthenticated]
     
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
